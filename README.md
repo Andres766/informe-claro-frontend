@@ -1,16 +1,54 @@
-# React + Vite
+# InformeClaro — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interfaz web de **InformeClaro**, el traductor de resultados de laboratorio a lenguaje sencillo.
+El paciente sube el PDF de su examen y recibe la explicación de cada valor, comparado con su
+rango de referencia, más preguntas para llevar a su próxima consulta. **Nunca diagnostica ni
+recomienda tratamiento**: la decisión clínica es 100 % del médico.
 
-Currently, two official plugins are available:
+Proyecto final individual — Programación Orientada a la Web, Ingeniería de Software, UCC Pasto.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- App desplegada: https://informe-claro.vercel.app
+- Backend (API FastAPI): https://github.com/Andres766/informe-claro-backend
 
-## React Compiler
+Stack: React · Vite · CSS propio · PWA (manifest + Service Worker).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## Cómo ejecutarlo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Requisitos: Node 20+ y el [backend](https://github.com/Andres766/informe-claro-backend)
+corriendo en `http://localhost:8000`.
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+```
+
+En desarrollo, Vite redirige `/api` al backend local (ver `vite.config.js`).
+En producción se define `VITE_API_URL` con la URL pública del backend.
+
+## Funcionalidades
+
+- Registro e inicio de sesión (token JWT); cada usuario ve solo su propio historial.
+- Carga del PDF con arrastrar y soltar.
+- Resultados: resumen, cada valor con su barra de rango y explicación en lenguaje sencillo,
+  filtro de valores fuera de rango y preguntas sugeridas que se pueden copiar.
+- Historial de informes con opción de eliminar.
+- PWA: la carcasa de la app abre sin conexión; los datos de salud (`/api`) nunca se guardan en caché.
+
+## Estructura
+
+| Archivo | Rol |
+|---|---|
+| `src/api.js` | Cliente de la API y manejo de la sesión |
+| `src/App.jsx` | Navegación entre vistas y control de sesión |
+| `src/components/Acceso.jsx` | Inicio de sesión y registro |
+| `src/components/SubirInforme.jsx` | Carga del PDF |
+| `src/components/ResultadoInforme.jsx` | Explicación de los valores y preguntas sugeridas |
+| `src/components/Historial.jsx` | Informes anteriores del usuario |
+| `public/sw.js` | Service Worker |
+
+## Despliegue (Vercel)
+
+Framework: Vite · Build: `npm run build` · Salida: `dist`.
+Variable de entorno: `VITE_API_URL` = URL del backend (sin `/` al final).
