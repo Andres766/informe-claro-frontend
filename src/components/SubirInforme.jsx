@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { AlertCircle, Check, FileText, FileUp, FileX2, LoaderCircle, Lock, Stethoscope } from 'lucide-react'
+import { AlertCircle, Check, FileText, FileUp, FileX2, Languages, LoaderCircle, Lock, Stethoscope } from 'lucide-react'
 import { api } from '../api'
 import { partible } from '../estados'
+import { useIdioma } from '../i18n/contexto'
 
-const PASOS = ['Leer el PDF', 'Encontrar los valores', 'Preparar la explicación']
+const TOTAL_PASOS = 3
 
 export default function SubirInforme({ onListo, motor }) {
+  const { t } = useIdioma()
+  const pasos = t('subir.pasos')
   const [archivo, setArchivo] = useState(null)
   const [arrastrando, setArrastrando] = useState(false)
   const [cargando, setCargando] = useState(false)
@@ -16,7 +19,7 @@ export default function SubirInforme({ onListo, motor }) {
 
   useEffect(() => {
     if (!cargando) return
-    const avance = setInterval(() => setPaso((p) => Math.min(p + 1, PASOS.length - 1)), 1600)
+    const avance = setInterval(() => setPaso((p) => Math.min(p + 1, TOTAL_PASOS - 1)), 1600)
     const espera = setTimeout(() => setLento(true), 9000)
     return () => {
       clearInterval(avance)
@@ -28,7 +31,7 @@ export default function SubirInforme({ onListo, motor }) {
     setError('')
     if (!f) return
     if (f.type !== 'application/pdf' && !f.name.toLowerCase().endsWith('.pdf')) {
-      setError('Ese archivo no es un PDF. Elige el PDF que te entregó el laboratorio.')
+      setError(t('subir.noEsPdf'))
       return
     }
     setArchivo(f)
@@ -51,10 +54,8 @@ export default function SubirInforme({ onListo, motor }) {
   return (
     <section className="subir">
       <div className="hoja subir__hoja">
-        <h1>Sube tu informe de laboratorio</h1>
-        <p className="entrada">
-          Usa el PDF que te entregó el laboratorio. En menos de un minuto tendrás tu hoja para la cita.
-        </p>
+        <h1>{t('subir.titulo')}</h1>
+        <p className="entrada">{t('subir.entrada')}</p>
 
         {!cargando && (
           <div
@@ -72,14 +73,14 @@ export default function SubirInforme({ onListo, motor }) {
                   <strong>{partible(archivo.name)}</strong>
                   <small>{(archivo.size / 1024).toFixed(0)} KB</small>
                 </span>
-                <button type="button" className="boton-texto" onClick={() => input.current.click()}>Cambiar</button>
+                <button type="button" className="boton-texto" onClick={() => input.current.click()}>{t('subir.cambiar')}</button>
               </div>
             ) : (
               <>
                 <FileUp size={34} aria-hidden="true" />
-                <p><strong>Arrastra el PDF aquí</strong><br />o búscalo en tu celular o computador</p>
+                <p><strong>{t('subir.arrastra')}</strong><br />{t('subir.buscaEn')}</p>
                 <button type="button" className="boton boton--secundario" onClick={() => input.current.click()}>
-                  Buscar archivo
+                  {t('subir.buscar')}
                 </button>
               </>
             )}
@@ -89,7 +90,7 @@ export default function SubirInforme({ onListo, motor }) {
         {cargando && (
           <div className="proceso" role="status" aria-live="polite">
             <ol>
-              {PASOS.map((texto, i) => (
+              {pasos.map((texto, i) => (
                 <li key={texto} className={i < paso ? 'hecho' : i === paso ? 'actual' : ''}>
                   {i < paso
                     ? <Check size={20} aria-hidden="true" />
@@ -101,9 +102,7 @@ export default function SubirInforme({ onListo, motor }) {
               ))}
             </ol>
             {lento && (
-              <p className="nota">
-                El servidor gratuito puede tardar hasta un minuto en despertar. No cierres esta página.
-              </p>
+              <p className="nota">{t('subir.lento')}</p>
             )}
           </div>
         )}
@@ -111,18 +110,21 @@ export default function SubirInforme({ onListo, motor }) {
         {error && <p className="alerta" role="alert"><AlertCircle size={20} aria-hidden="true" /> {error}</p>}
 
         {!cargando && (
-          <button className="boton boton--ancho" disabled={!archivo} onClick={enviar}>
-            Explicar mi informe
-          </button>
+          <>
+            <p className="subir__idioma"><Languages size={18} aria-hidden="true" /> {t('subir.idiomaExplicacion')}</p>
+            <button className="boton boton--ancho" disabled={!archivo} onClick={enviar}>
+              {t('subir.explicar')}
+            </button>
+          </>
         )}
       </div>
 
       <ul className="promesas subir__promesas">
-        <li><FileX2 size={20} aria-hidden="true" /> No guardamos tu PDF, solo los valores y su explicación.</li>
-        <li><Lock size={20} aria-hidden="true" /> Tus datos personales se ocultan antes de procesar el texto.</li>
-        <li><Stethoscope size={20} aria-hidden="true" /> No es un diagnóstico: la decisión clínica es de tu médico.</li>
+        <li><FileX2 size={20} aria-hidden="true" /> {t('subir.sinPdf')}</li>
+        <li><Lock size={20} aria-hidden="true" /> {t('subir.datosOcultos')}</li>
+        <li><Stethoscope size={20} aria-hidden="true" /> {t('subir.noDiagnostico')}</li>
       </ul>
-      {motor && <p className="motor">Motor de interpretación: {motor}</p>}
+      {motor && <p className="motor">{t('subir.motor', { motor })}</p>}
     </section>
   )
 }
