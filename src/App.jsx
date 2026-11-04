@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import { FilePlus2, Files, LoaderCircle, LogOut } from 'lucide-react'
 import { api, sesion } from './api'
+import Logo from './components/Logo'
 import Acceso from './components/Acceso'
 import SubirInforme from './components/SubirInforme'
 import ResultadoInforme from './components/ResultadoInforme'
@@ -48,37 +50,56 @@ export default function App() {
   const mostrarInforme = (datos) => {
     setInforme(datos)
     setVista('resultado')
+    window.scrollTo({ top: 0 })
   }
+
+  const enHistorial = vista === 'historial'
 
   return (
     <div className="app">
       <header className="barra">
-        <div className="barra__marca">
-          <img src="/favicon.svg" alt="" width="32" height="32" />
-          <span>InformeClaro</span>
+        <div className="barra__interior">
+          <span className="marca">
+            <Logo size={34} />
+            InformeClaro
+          </span>
+
+          {usuario && (
+            <>
+              <nav className="navegacion" aria-label="Secciones">
+                <button className={!enHistorial ? 'activa' : ''} aria-current={!enHistorial ? 'page' : undefined}
+                  onClick={() => setVista('subir')}>
+                  <FilePlus2 size={19} aria-hidden="true" /> Nuevo informe
+                </button>
+                <button className={enHistorial ? 'activa' : ''} aria-current={enHistorial ? 'page' : undefined}
+                  onClick={() => setVista('historial')}>
+                  <Files size={19} aria-hidden="true" /> Mis hojas
+                </button>
+              </nav>
+              <div className="cuenta">
+                <span className="cuenta__nombre" title={usuario.email}>{usuario.nombre.split(' ')[0]}</span>
+                <button className="boton-texto" onClick={salir}>
+                  <LogOut size={18} aria-hidden="true" /> Salir
+                </button>
+              </div>
+            </>
+          )}
         </div>
-        {usuario && (
-          <nav className="barra__nav">
-            <button className={vista !== 'historial' ? 'activo' : ''} onClick={() => setVista('subir')}>
-              Nuevo informe
-            </button>
-            <button className={vista === 'historial' ? 'activo' : ''} onClick={() => setVista('historial')}>
-              Mi historial
-            </button>
-            <span className="barra__usuario" title={usuario.email}>{usuario.nombre.split(' ')[0]}</span>
-            <button onClick={salir}>Salir</button>
-          </nav>
-        )}
       </header>
 
       <main className="contenido">
-        {usuario === undefined && <p className="tenue cargando">Conectando con el servidor…</p>}
+        {usuario === undefined && (
+          <p className="conectando" role="status">
+            <LoaderCircle className="girando" size={22} aria-hidden="true" />
+            Conectando con el servidor…
+          </p>
+        )}
         {usuario === null && <Acceso onIngreso={ingresar} aviso={avisoAcceso} />}
         {usuario && vista === 'subir' && <SubirInforme onListo={mostrarInforme} motor={motor} />}
         {usuario && vista === 'resultado' && informe && (
           <ResultadoInforme informe={informe} onNuevo={() => setVista('subir')} />
         )}
-        {usuario && vista === 'historial' && <Historial onAbrir={mostrarInforme} />}
+        {usuario && enHistorial && <Historial onAbrir={mostrarInforme} onNuevo={() => setVista('subir')} />}
       </main>
 
       <footer className="pie">
