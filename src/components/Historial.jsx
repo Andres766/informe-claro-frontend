@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { AlertCircle, ChevronRight, FilePlus2, LoaderCircle, Trash2 } from 'lucide-react'
 import { api } from '../api'
+import { partible } from '../estados'
 
-export default function Historial({ onAbrir }) {
+export default function Historial({ onAbrir, onNuevo }) {
   const [informes, setInformes] = useState(null)
   const [error, setError] = useState('')
 
@@ -17,10 +19,10 @@ export default function Historial({ onAbrir }) {
     }
   }
 
-  const eliminar = async (id) => {
-    if (!confirm('¿Eliminar este informe de tu historial?')) return
+  const eliminar = async (informe) => {
+    if (!confirm(`¿Eliminar «${informe.nombre_archivo}» de tus hojas? No se puede deshacer.`)) return
     try {
-      await api.eliminarInforme(id)
+      await api.eliminarInforme(informe.id)
       cargar()
     } catch (e) {
       setError(e.message)
@@ -28,33 +30,48 @@ export default function Historial({ onAbrir }) {
   }
 
   return (
-    <section>
-      <h1>Mi historial</h1>
-      {error && <p className="alerta alerta--error">{error}</p>}
-      {informes === null && !error && <p className="tenue">Cargando…</p>}
-      {informes?.length === 0 && <p className="tenue">Aún no has subido ningún informe.</p>}
+    <section className="historial">
+      <h1>Mis hojas</h1>
+      <p className="entrada">Los informes que has subido, del más reciente al más antiguo.</p>
 
-      <ul className="historial">
-        {informes?.map((i) => (
-          <li key={i.id} className="tarjeta historial__item">
-            <button className="historial__abrir" onClick={() => abrir(i.id)}>
-              <strong>{i.nombre_archivo}</strong>
-              <span className="tenue">
-                {new Date(i.fecha_carga).toLocaleDateString('es-CO', { dateStyle: 'medium' })}
-                {' · '}{i.total_valores} valores
-              </span>
-            </button>
-            {i.fuera_de_rango > 0
-              ? <span className="etiqueta etiqueta--alto">{i.fuera_de_rango} fuera de rango</span>
-              : <span className="etiqueta etiqueta--normal">Todo en rango</span>}
-            <button className="icono" aria-label="Eliminar" title="Eliminar" onClick={() => eliminar(i.id)}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M8 6V4h8v2" />
-                <path d="M19 6l-1 14H6L5 6" /></svg>
-            </button>
-          </li>
-        ))}
-      </ul>
+      {error && <p className="alerta" role="alert"><AlertCircle size={20} aria-hidden="true" /> {error}</p>}
+      {informes === null && !error && (
+        <p className="conectando" role="status"><LoaderCircle className="girando" size={22} aria-hidden="true" /> Cargando…</p>
+      )}
+
+      {informes?.length === 0 && (
+        <div className="hoja vacio-historial">
+          <h2>Todavía no tienes hojas</h2>
+          <p>Cuando subas tu primer informe de laboratorio, aparecerá aquí para que lo vuelvas a consultar.</p>
+          <button className="boton" onClick={onNuevo}><FilePlus2 size={19} aria-hidden="true" /> Subir mi primer informe</button>
+        </div>
+      )}
+
+      {informes?.length > 0 && (
+        <ul className="hoja pila">
+          {informes.map((i) => (
+            <li key={i.id} className="pila__item">
+              <button className="pila__abrir" onClick={() => abrir(i.id)}>
+                <span className="pila__nombre">{partible(i.nombre_archivo)}</span>
+                <span className="pila__meta">
+                  {new Date(i.fecha_carga).toLocaleDateString('es-CO', { dateStyle: 'long' })}
+                  {' · '}<span className="cifra">{i.total_valores}</span> valores
+                </span>
+                <span className={`pila__estado ${i.fuera_de_rango ? 'pila__estado--fuera' : ''}`}>
+                  {i.fuera_de_rango
+                    ? <><span className="cifra">{i.fuera_de_rango}</span> para conversar</>
+                    : 'Todo en rango'}
+                </span>
+                <ChevronRight className="pila__flecha" size={22} aria-hidden="true" />
+              </button>
+              <button className="boton-eliminar" onClick={() => eliminar(i)}
+                aria-label={`Eliminar ${i.nombre_archivo}`}>
+                <Trash2 size={18} aria-hidden="true" /> <span>Eliminar</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   )
 }
