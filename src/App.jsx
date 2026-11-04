@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { FilePlus2, Files, LoaderCircle, LogOut } from 'lucide-react'
 import { api, sesion } from './api'
+import { useIdioma } from './i18n/contexto'
+import Preferencias from './components/Preferencias'
 import Logo from './components/Logo'
 import Acceso from './components/Acceso'
 import SubirInforme from './components/SubirInforme'
@@ -8,6 +10,7 @@ import ResultadoInforme from './components/ResultadoInforme'
 import Historial from './components/Historial'
 
 export default function App() {
+  const { t } = useIdioma()
   // undefined = comprobando la sesión guardada; null = sin sesión
   const [usuario, setUsuario] = useState(sesion.activa() ? undefined : null)
   const [avisoAcceso, setAvisoAcceso] = useState('')
@@ -20,7 +23,7 @@ export default function App() {
 
     sesion.alExpirar(() => {
       setUsuario(null)
-      setAvisoAcceso('Tu sesión expiró. Vuelve a iniciar sesión.')
+      setAvisoAcceso('sesionExpirada')
     })
 
     if (sesion.activa()) {
@@ -64,22 +67,24 @@ export default function App() {
             InformeClaro
           </span>
 
+          <Preferencias />
+
           {usuario && (
             <>
-              <nav className="navegacion" aria-label="Secciones">
+              <nav className="navegacion" aria-label={t('app.secciones')}>
                 <button className={!enHistorial ? 'activa' : ''} aria-current={!enHistorial ? 'page' : undefined}
                   onClick={() => setVista('subir')}>
-                  <FilePlus2 size={19} aria-hidden="true" /> Nuevo informe
+                  <FilePlus2 size={19} aria-hidden="true" /> {t('app.nuevo')}
                 </button>
                 <button className={enHistorial ? 'activa' : ''} aria-current={enHistorial ? 'page' : undefined}
                   onClick={() => setVista('historial')}>
-                  <Files size={19} aria-hidden="true" /> Mis hojas
+                  <Files size={19} aria-hidden="true" /> {t('app.hojas')}
                 </button>
               </nav>
               <div className="cuenta">
                 <span className="cuenta__nombre" title={usuario.email}>{usuario.nombre.split(' ')[0]}</span>
                 <button className="boton-texto" onClick={salir}>
-                  <LogOut size={18} aria-hidden="true" /> Salir
+                  <LogOut size={18} aria-hidden="true" /> {t('app.salir')}
                 </button>
               </div>
             </>
@@ -91,10 +96,12 @@ export default function App() {
         {usuario === undefined && (
           <p className="conectando" role="status">
             <LoaderCircle className="girando" size={22} aria-hidden="true" />
-            Conectando con el servidor…
+            {t('app.conectando')}
           </p>
         )}
-        {usuario === null && <Acceso onIngreso={ingresar} aviso={avisoAcceso} />}
+        {usuario === null && (
+          <Acceso onIngreso={ingresar} aviso={avisoAcceso === 'sesionExpirada' ? t('app.sesionExpirada') : avisoAcceso} />
+        )}
         {usuario && vista === 'subir' && <SubirInforme onListo={mostrarInforme} motor={motor} />}
         {usuario && vista === 'resultado' && informe && (
           <ResultadoInforme informe={informe} onNuevo={() => setVista('subir')} />
@@ -102,10 +109,7 @@ export default function App() {
         {usuario && enHistorial && <Historial onAbrir={mostrarInforme} onNuevo={() => setVista('subir')} />}
       </main>
 
-      <footer className="pie">
-        InformeClaro explica tus resultados, pero no diagnostica ni recomienda tratamientos.
-        La interpretación clínica corresponde siempre a tu médico.
-      </footer>
+      <footer className="pie">{t('app.pie')}</footer>
     </div>
   )
 }

@@ -70,6 +70,15 @@ button:disabled { cursor: not-allowed; }
 .navegacion button:hover { color: var(--tinta); }
 .navegacion button.activa { color: var(--tinta); border-bottom-color: var(--tinta); }
 .cuenta { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+.preferencias { display: flex; align-items: center; gap: 0.25rem; order: 2; margin-left: auto; }
+.preferencias + .navegacion { order: 1; }
+.cuenta { order: 3; margin-left: 0; }
+.boton-preferencia {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+  min-width: 44px; min-height: 44px; padding: 0 0.6rem; border-radius: var(--radio);
+  background: none; border: 1.5px solid transparent; color: var(--texto-2); font-weight: 700; font-size: 0.875rem;
+}
+.boton-preferencia:hover { color: var(--tinta); border-color: var(--renglon); }
 .cuenta__nombre { font-weight: 600; max-width: 10rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .contenido {
@@ -371,12 +380,17 @@ button:disabled { cursor: not-allowed; }
 /* --- Móvil ---------------------------------------------------------------- */
 
 @media (max-width: 640px) {
-  .navegacion { order: 3; width: 100%; }
+  .navegacion, .preferencias + .navegacion { order: 4; width: 100%; }
+  .barra__interior { column-gap: 0.75rem; }
   .navegacion button { flex: 1; justify-content: center; padding: 0 0.5rem; }
   .pila__item { flex-direction: column; align-items: stretch; gap: 0; }
   .pila__abrir { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "nombre flecha" "meta flecha" "estado flecha"; row-gap: 0.35rem; }
   .pila__estado { justify-self: start; }
   .boton-eliminar { align-self: flex-end; margin-bottom: 0.85rem; }
+}
+
+@media (max-width: 420px) {
+  .cuenta__nombre { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
