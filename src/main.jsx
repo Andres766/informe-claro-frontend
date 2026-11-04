@@ -9,10 +9,13 @@ import '@fontsource/atkinson-hyperlegible-mono/500.css'
 import '@fontsource/atkinson-hyperlegible-mono/700.css'
 import './index.css'
 import App from './App.jsx'
+import IdiomaProvider from './i18n/IdiomaProvider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <IdiomaProvider>
+      <App />
+    </IdiomaProvider>
   </StrictMode>,
 )
 
