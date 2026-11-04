@@ -10,10 +10,11 @@ import '@fontsource/atkinson-hyperlegible-mono/700.css'
 import './index.css'
 import App from './App.jsx'
 import IdiomaProvider from './i18n/IdiomaProvider'
+import { configurarIdioma } from './api'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <IdiomaProvider>
+    <IdiomaProvider alCambiar={configurarIdioma}>
       <App />
     </IdiomaProvider>
   </StrictMode>,

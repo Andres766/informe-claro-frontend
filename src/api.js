@@ -1,5 +1,14 @@
+import { DICCIONARIOS, idiomaInicial, traducir } from './i18n/contexto'
+
 // En producción VITE_API_URL apunta al backend desplegado (Render / Railway).
 const BASE = import.meta.env.VITE_API_URL ?? ''
+
+// Idioma actual de la interfaz: viaja al backend y traduce los mensajes del cliente.
+let idiomaActual = idiomaInicial() // listo antes de las primeras peticiones
+export function configurarIdioma(idioma) {
+  idiomaActual = idioma
+}
+const m = (clave, datos) => traducir(DICCIONARIOS[idiomaActual], `api.${clave}`, datos)
 const CLAVE_TOKEN = 'informeclaro_token'
 
 // --- Sesión (token JWT guardado en el navegador) ---------------------------
@@ -41,14 +50,14 @@ export const sesion = {
 // --- Peticiones ------------------------------------------------------------
 
 async function pedir(ruta, { auth = true, ...opciones } = {}) {
-  const headers = { ...opciones.headers }
+  const headers = { 'Accept-Language': idiomaActual, ...opciones.headers }
   if (auth && tokenEnMemoria) headers.Authorization = `Bearer ${tokenEnMemoria}`
 
   let resp
   try {
     resp = await fetch(`${BASE}/api${ruta}`, { ...opciones, headers })
   } catch {
-    throw new Error('No se pudo conectar con el servidor. ¿Está encendido el backend?')
+    throw new Error(m('sinConexion'))
   }
   if (resp.status === 204) return null
   const datos = await resp.json().catch(() => ({}))
@@ -65,11 +74,11 @@ function mensajeDeError(datos, status) {
   if (typeof datos.detail === 'string') return datos.detail
   if (Array.isArray(datos.detail)) {
     const campo = datos.detail[0]?.loc?.at(-1)
-    if (campo === 'email') return 'Escribe un correo electrónico válido.'
-    if (campo === 'password') return 'La contraseña debe tener al menos 8 caracteres.'
-    if (campo === 'nombre') return 'Escribe tu nombre.'
+    if (campo === 'email') return m('emailInvalido')
+    if (campo === 'password') return m('passwordCorta')
+    if (campo === 'nombre') return m('nombreFalta')
   }
-  return `Error ${status}`
+  return m('error', { status })
 }
 
 const json = (cuerpo) => ({
@@ -86,6 +95,7 @@ export const api = {
   subirInforme: (archivo) => {
     const form = new FormData()
     form.append('archivo', archivo)
+    form.append('idioma', idiomaActual) // la explicación se genera en el idioma de la interfaz
     return pedir('/informes', { method: 'POST', body: form })
   },
   listarInformes: () => pedir('/informes'),
