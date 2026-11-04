@@ -36,16 +36,29 @@ En producción se define `VITE_API_URL` con la URL pública del backend.
 - Historial de informes con opción de eliminar.
 - PWA: la carcasa de la app abre sin conexión; los datos de salud (`/api`) nunca se guardan en caché.
 
+## Idiomas y temas
+
+- **Español e inglés:** botón ES/EN en la barra superior. La elección se guarda y la primera vez se usa
+  el idioma del navegador. Toda la interfaz está en `src/i18n/` (`es.js`, `en.js`); el idioma viaja al
+  backend (`Accept-Language` y campo `idioma` al subir), así que la explicación, el resumen y las
+  preguntas también salen en el idioma elegido.
+- **Modo claro, oscuro o automático:** botón de tema en la barra (automático → claro → oscuro). En
+  automático sigue al sistema; la elección se guarda y se aplica antes de pintar (`src/tema.js`).
+  La paleta oscura redefine los mismos tokens de color de `src/index.css`; la hoja impresa sale
+  siempre en claro.
+
 ## Estructura
 
 | Archivo | Rol |
 |---|---|
-| `src/api.js` | Cliente de la API y manejo de la sesión |
+| `src/api.js` | Cliente de la API, manejo de la sesión e idioma de las peticiones |
 | `src/App.jsx` | Navegación entre vistas y control de sesión |
 | `src/components/Acceso.jsx` | Inicio de sesión y registro |
 | `src/components/SubirInforme.jsx` | Carga del PDF |
 | `src/components/ResultadoInforme.jsx` | Explicación de los valores y preguntas sugeridas |
 | `src/components/Historial.jsx` | Informes anteriores del usuario |
+| `src/i18n/` | Diccionarios en español e inglés y contexto de idioma |
+| `src/tema.js`, `src/components/Preferencias.jsx` | Tema claro/oscuro y botones de idioma y tema |
 | `public/sw.js` | Service Worker |
 
 ## Despliegue (Vercel)

@@ -4,7 +4,7 @@ description: The lab report rewritten as the ruled sheet a patient carries to th
 colors:
   mesa: "#E6EAF2"
   papel: "#F6F7FB"
-  blanco: "#FFFFFF"
+  superficie: "#FFFFFF"
   tinta: "#1F3FA8"
   tinta-hover: "#172F80"
   tinta-suave: "#E1E7F7"
@@ -19,6 +19,11 @@ colors:
   error: "#A3262A"
   error-suave: "#FBECEC"
   logo-teal: "#0F766E"
+  sobre-tinta: "#FFFFFF"
+  tinta-apagada: "#8E9BC6"
+  error-borde: "#E8B9BB"
+  seleccion: "#D3DBF3"
+  perforado-impreso: "#888888"
 typography:
   display:
     fontFamily: "Atkinson Hyperlegible Next, system-ui, -apple-system, Segoe UI, sans-serif"
@@ -78,6 +83,17 @@ typography:
     fontSize: "0.9375rem"
     fontWeight: 500
     fontFeature: "tnum"
+  brand:
+    fontFamily: "Atkinson Hyperlegible Next, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "1.1875rem"
+    fontWeight: 800
+    lineHeight: 1.2
+  status-mark:
+    fontFamily: "Atkinson Hyperlegible Next, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "0.04em"
 rounded:
   radio: "4px"
   sello: "3px"
@@ -197,7 +213,7 @@ A cool stationery palette: blue-grey desk, near-white pad paper, blue rules, one
 ### Neutral
 - **Desk** (mesa): page background behind the sheets; also the PWA background colour and the knock-out behind the slip's scissors.
 - **Pad Paper** (papel): the sheet surface; also the 2px halo around the range dot.
-- **White** (blanco): app bar, inputs, drop zone, tear-off slip, phone bottom bar, notes. Paper that is not the ruled pad.
+- **Surface** (superficie): app bar, inputs, drop zone, tear-off slip, phone bottom bar, notes. Paper that is not the ruled pad. **Text on Ink** (sobre-tinta) is the label colour of filled buttons; **Faded Ink** (tinta-apagada) is a disabled button; **Selection** (seleccion) themes text selection; **Error Rule** (error-borde) frames error notes.
 - **Carbon** (texto): body text and headings.
 - **Pencil Grey** (texto-2): secondary text, metadata, ranges, units, inactive tabs.
 - **Blue Rule** (renglon): hairline borders, list dividers, app bar edge.
@@ -311,6 +327,32 @@ White zone with a 2px dashed Strong Rule border; dragging over turns it Ballpoin
 
 ### Motion and print
 Only three motions exist: the stamp press, the bottom-bar slide, and a 1s linear spinner for loading. `prefers-reduced-motion: reduce` collapses all animations and transitions to 0.01ms. Print sets 11pt on white, hides the bar, footer, tabs, slip actions, scissors and phone bar, removes ruling, margin rule and shadows, keeps rows and slip items unbroken, and separates the slip with a grey dashed rule.
+
+## Dark Mode
+
+The same pad at night. Dark is not a separate design: every component reads the same semantic tokens and the dark palette redefines them. It follows the device setting by default (`prefers-color-scheme`), and the theme button in the app bar cycles Automatic → Light → Dark; a fixed choice is stored and written to `<html data-theme="light|dark">` before first paint, so there is no flash.
+
+| Token | Light | Dark |
+|---|---|---|
+| mesa (desk) | #E6EAF2 | #11141B |
+| papel (pad paper) | #F6F7FB | #1A1E28 |
+| superficie | #FFFFFF | #222736 |
+| tinta (ballpoint) | #1F3FA8 | #9DB0FF |
+| tinta-hover | #172F80 | #BCC9FF |
+| tinta-suave | #E1E7F7 | #262F4D |
+| sobre-tinta | #FFFFFF | #0E1530 |
+| sello (stamp) | #5B3A9B | #C4A8F5 |
+| texto | #23262E | #E7E9EF |
+| texto-2 | #4D5464 | #A8AFC0 |
+| renglon / renglon-fuerte / renglon-claro | #C9D3E6 / #9EAECF / #D6DEEE | #343B4D / #4C5672 / #262C3A |
+| margen | #E8BCCB | #5B3A4A |
+| error / error-suave | #A3262A / #FBECEC | #FF9B9B / #3A2125 |
+
+Rules: in dark the ink is light and the label on filled buttons turns dark (`sobre-tinta`), so contrast holds above 4.5:1; stamps stay double-ruled, now in lilac; shadows become plain black at higher opacity; the browser bar (`theme-color`) follows the effective theme (#FFFFFF light, #222736 dark). Printing always uses the light palette, whatever the screen theme.
+
+## Languages
+
+The interface ships in Spanish (Colombia) and English. The language button in the app bar shows the other language ("EN" / "ES"), the choice is stored, and the first visit follows the browser. `<html lang>` follows the choice, and generated content (explanations, summary, questions) carries the `lang` of the language it was generated in; a note appears when a sheet was generated in the other language. Dates use `es-CO` or `en-US` long format. Copy keeps the same voice in both languages: second person, calm, never alarming; out-of-range is "Por encima / Above", "Por debajo / Below".
 
 ## Do's and Don'ts
 
