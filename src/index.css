@@ -26,6 +26,7 @@
   --error-borde: #E8B9BB;
   --seleccion: #D3DBF3;
 
+  color-scheme: light;
   --fuente: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --cifras: 'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;
 
@@ -37,6 +38,61 @@
   -webkit-font-smoothing: antialiased;
   scrollbar-color: var(--renglon-fuerte) var(--mesa);
   caret-color: var(--tinta);
+}
+
+/* Modo oscuro: el mismo talonario de noche (papel grafito, tinta azul clara, sello lila).
+   Sigue al sistema salvo que la persona elija un tema (atributo data-theme en <html>). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --mesa: #11141B;
+    --papel: #1A1E28;
+    --superficie: #222736;
+    --tinta: #9DB0FF;
+    --tinta-hover: #BCC9FF;
+    --tinta-suave: #262F4D;
+    --sello: #C4A8F5;
+    --sello-suave: #2D2640;
+    --texto: #E7E9EF;
+    --texto-2: #A8AFC0;
+    --renglon: #343B4D;
+    --renglon-fuerte: #4C5672;
+    --renglon-claro: #262C3A;
+    --margen: #5B3A4A;
+    --error: #FF9B9B;
+    --error-suave: #3A2125;
+    --error-borde: #6B3A40;
+    --seleccion: #34406A;
+    --sobre-tinta: #0E1530;
+    --tinta-apagada: #4A5373;
+    --sombra-hoja: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 30px -14px rgb(0 0 0 / 0.6);
+    --sombra-barra: 0 -8px 20px -12px rgb(0 0 0 / 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --mesa: #11141B;
+  --papel: #1A1E28;
+  --superficie: #222736;
+  --tinta: #9DB0FF;
+  --tinta-hover: #BCC9FF;
+  --tinta-suave: #262F4D;
+  --sello: #C4A8F5;
+  --sello-suave: #2D2640;
+  --texto: #E7E9EF;
+  --texto-2: #A8AFC0;
+  --renglon: #343B4D;
+  --renglon-fuerte: #4C5672;
+  --renglon-claro: #262C3A;
+  --margen: #5B3A4A;
+  --error: #FF9B9B;
+  --error-suave: #3A2125;
+  --error-borde: #6B3A40;
+  --seleccion: #34406A;
+  --sobre-tinta: #0E1530;
+  --tinta-apagada: #4A5373;
+  --sombra-hoja: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 30px -14px rgb(0 0 0 / 0.6);
+  --sombra-barra: 0 -8px 20px -12px rgb(0 0 0 / 0.6);
 }
 
 * { box-sizing: border-box; }
