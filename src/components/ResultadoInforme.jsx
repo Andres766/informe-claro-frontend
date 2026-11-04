@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Check, Copy, FilePlus2, Info, Printer, Scissors } from 'lucide-react'
+import { Check, Copy, FilePlus2, Info, Languages, Printer, Scissors } from 'lucide-react'
 import Sello from './Sello'
 import { fueraDeRango, partible } from '../estados'
+import { useIdioma } from '../i18n/contexto'
 
 const num = (s) => parseFloat(String(s).replace(',', '.'))
 
@@ -31,16 +32,17 @@ function Escala({ valor, rango, estado }) {
   )
 }
 
-// "> 40" -> "más de 40"; "70 - 100" -> "70 a 100"
-function rangoEnPalabras(rango) {
-  if (!rango) return 'sin rango impreso'
-  return 'ref. ' + rango
-    .replace(/^\s*[<≤]=?\s*/, 'menos de ')
-    .replace(/^\s*[>≥]=?\s*/, 'más de ')
-    .replace(/\s*[-–]\s*/, ' a ')
+// "> 40" -> "más de 40" / "more than 40"; "70 - 100" -> "70 a 100" / "70 to 100"
+function rangoEnPalabras(rango, t) {
+  if (!rango) return t('resultado.rango.sin')
+  return `${t('resultado.rango.ref')} ` + rango
+    .replace(/^\s*[<≤]=?\s*/, `${t('resultado.rango.menosDe')} `)
+    .replace(/^\s*[>≥]=?\s*/, `${t('resultado.rango.masDe')} `)
+    .replace(/\s*[-–]\s*/, ` ${t('resultado.rango.a')} `)
 }
 
 export default function ResultadoInforme({ informe, onNuevo }) {
+  const { t, idioma, locale } = useIdioma()
   const [filtro, setFiltro] = useState('todos')
   const [copiado, setCopiado] = useState(false)
   const [desprendibleVisible, setDesprendibleVisible] = useState(false)
@@ -51,7 +53,7 @@ export default function ResultadoInforme({ informe, onNuevo }) {
   const total = informe.valores.length
   const fuera = informe.valores.filter((v) => fueraDeRango(v.estado))
   const visibles = filtro === 'fuera' ? fuera : informe.valores
-  const fecha = new Date(informe.fecha_carga).toLocaleDateString('es-CO', { dateStyle: 'long' })
+  const fecha = new Date(informe.fecha_carga).toLocaleDateString(locale, { dateStyle: 'long' })
   const preguntas = informe.preguntas.length
 
   // En el celular, la barra inferior aparece cuando ya bajaste por la lista
@@ -69,7 +71,7 @@ export default function ResultadoInforme({ informe, onNuevo }) {
   }, [])
 
   const copiarPreguntas = async () => {
-    const texto = 'Preguntas para mi cita\n\n'
+    const texto = `${t('resultado.textoCopiado')}\n\n`
       + informe.preguntas.map((p, i) => `${i + 1}. ${p.texto_pregunta}`).join('\n')
     try {
       await navigator.clipboard.writeText(texto)
@@ -91,31 +93,34 @@ export default function ResultadoInforme({ informe, onNuevo }) {
         <header className="resultado__cabecera" ref={cabecera}>
           <h1>
             {fuera.length
-              ? `${fuera.length} de ${total} valores para conversar con tu médico`
-              : `Tus ${total} valores están dentro del rango`}
+              ? t('resultado.tituloFuera', { n: fuera.length, total })
+              : t('resultado.tituloOk', { total })}
           </h1>
           <p className="resultado__meta">{partible(informe.nombre_archivo)} · <span className="sin-corte">{fecha}</span></p>
           <p className="aviso"><Info size={18} aria-hidden="true" /> {informe.aviso}</p>
+          {informe.idioma && informe.idioma !== idioma && (
+            <p className="aviso" lang={informe.idioma}><Languages size={18} aria-hidden="true" /> {t('resultado.otroIdioma')}</p>
+          )}
         </header>
 
-        <div className="pestanas pestanas--filtro" role="group" aria-label="Filtrar valores">
+        <div className="pestanas pestanas--filtro" role="group" aria-label={t('resultado.filtrar')}>
           <button className={filtro === 'todos' ? 'activa' : ''} aria-pressed={filtro === 'todos'}
             onClick={() => setFiltro('todos')}>
-            Todos <span className="cifra">{total}</span>
+            {t('resultado.todos')} <span className="cifra">{total}</span>
           </button>
           <button className={filtro === 'fuera' ? 'activa' : ''} aria-pressed={filtro === 'fuera'}
             onClick={() => setFiltro('fuera')}>
-            Para conversar <span className="cifra">{fuera.length}</span>
+            {t('resultado.conversar')} <span className="cifra">{fuera.length}</span>
           </button>
         </div>
 
-        <h2 className="sr-only">Tus valores</h2>
-        <ul className="valores">
+        <h2 className="sr-only">{t('resultado.tusValores')}</h2>
+        <ul className="valores" lang={informe.idioma || undefined}>
           {visibles.map((v, i) => (
             <li key={v.id} className={`valor valor--${v.estado}`}>
               <span className="valor__nombre">{v.nombre_valor}</span>
               <span className="valor__cifra"><span className="valor__numero">{v.valor}</span><small>{v.unidad}</small></span>
-              <span className="valor__rango">{rangoEnPalabras(v.rango_referencia)}</span>
+              <span className="valor__rango">{rangoEnPalabras(v.rango_referencia, t)}</span>
               <span className="valor__sello"><Sello estado={v.estado} orden={i} /></span>
               {v.rango_referencia && <Escala valor={v.valor} rango={v.rango_referencia} estado={v.estado} />}
               <p className="valor__frase">{v.explicacion_ia}</p>
@@ -123,24 +128,24 @@ export default function ResultadoInforme({ informe, onNuevo }) {
           ))}
         </ul>
         {visibles.length === 0 && (
-          <p className="vacio">Ningún valor quedó fuera del rango de referencia del laboratorio.</p>
+          <p className="vacio">{t('resultado.vacio')}</p>
         )}
 
         <section className="resultado__resumen" aria-labelledby="titulo-resumen">
-          <h2 id="titulo-resumen">En resumen</h2>
-          <p>{informe.resumen}</p>
+          <h2 id="titulo-resumen">{t('resultado.resumen')}</h2>
+          <p lang={informe.idioma || undefined}>{informe.resumen}</p>
         </section>
         <button className="boton boton--secundario resultado__nuevo" onClick={onNuevo}>
-          <FilePlus2 size={19} aria-hidden="true" /> Subir otro informe
+          <FilePlus2 size={19} aria-hidden="true" /> {t('resultado.nuevo')}
         </button>
-        <p className="resultado__motor">Motor de interpretación: {informe.motor}</p>
+        <p className="resultado__motor">{t('resultado.motor', { motor: informe.motor })}</p>
       </article>
 
       <aside className="desprendible" id="desprendible" ref={desprendible} aria-labelledby="titulo-desprendible">
         <div className="desprendible__corte" aria-hidden="true"><Scissors size={18} /></div>
-        <h2 id="titulo-desprendible">Para tu cita</h2>
-        <p className="desprendible__sub">Preguntas para llevarle a tu médico</p>
-        <ol>
+        <h2 id="titulo-desprendible">{t('resultado.paraCita')}</h2>
+        <p className="desprendible__sub">{t('resultado.preguntasSub')}</p>
+        <ol lang={informe.idioma || undefined}>
           {informe.preguntas.map((p, i) => (
             <li key={p.id}><span className="cifra" aria-hidden="true">{i + 1}</span>{p.texto_pregunta}</li>
           ))}
@@ -148,23 +153,23 @@ export default function ResultadoInforme({ informe, onNuevo }) {
         <div className="desprendible__acciones">
           <button className="boton" onClick={copiarPreguntas}>
             {copiado ? <Check size={19} aria-hidden="true" /> : <Copy size={19} aria-hidden="true" />}
-            {copiado ? 'Preguntas copiadas' : 'Copiar preguntas'}
+            {copiado ? t('resultado.copiadas') : t('resultado.copiar')}
           </button>
           <button className="boton boton--secundario" onClick={imprimir}>
-            <Printer size={19} aria-hidden="true" /> Imprimir hoja
+            <Printer size={19} aria-hidden="true" /> {t('resultado.imprimir')}
           </button>
         </div>
-        <p className="sr-only" role="status">{copiado ? 'Las preguntas se copiaron al portapapeles' : ''}</p>
+        <p className="sr-only" role="status">{copiado ? t('resultado.copiadasEstado') : ''}</p>
       </aside>
 
       <div className={`barra-cita ${desprendibleVisible || cabeceraVisible ? 'barra-cita--oculta' : ''}`}>
-        <a className="barra-cita__ir" href="#desprendible" aria-label={`Ir a tus ${preguntas} preguntas para la cita`}>
+        <a className="barra-cita__ir" href="#desprendible" aria-label={t('resultado.irAPreguntas', { n: preguntas })}>
           <Scissors size={18} aria-hidden="true" />
-          <span>Tus {preguntas} preguntas</span>
+          <span>{t('resultado.barraPreguntas', { n: preguntas })}</span>
         </a>
         <button className="boton" onClick={copiarPreguntas}>
           {copiado ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-          {copiado ? 'Copiadas' : 'Copiar'}
+          {copiado ? t('resultado.copiadasCorto') : t('resultado.copiarCorto')}
         </button>
       </div>
     </section>
