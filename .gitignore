@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable: archivos de trabajo locales (el contrato y DESIGN.md sí se versionan)
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/decision-payload.json
+.impeccable/brief-body.md
+.impeccable/config.local.json
