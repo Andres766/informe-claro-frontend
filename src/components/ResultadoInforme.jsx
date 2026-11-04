@@ -1,16 +1,13 @@
-import { useState } from 'react'
-
-const ETIQUETAS = {
-  normal: 'Dentro del rango',
-  alto: 'Por encima del rango',
-  bajo: 'Por debajo del rango',
-  sin_rango: 'Sin rango',
-}
+import { useEffect, useRef, useState } from 'react'
+import { Check, Copy, FilePlus2, Info, Printer, Scissors } from 'lucide-react'
+import Sello from './Sello'
+import { fueraDeRango, partible } from '../estados'
 
 const num = (s) => parseFloat(String(s).replace(',', '.'))
 
-// Barra visual: dónde cae el valor respecto al rango de referencia.
-function BarraRango({ valor, rango }) {
+// Escala impresa sobre el renglón: el rango del laboratorio entre dos marcas
+// y el valor como un punto de esfero.
+function Escala({ valor, rango, estado }) {
   const v = num(valor)
   let min, max
   const entre = rango.match(/^([\d.,]+)\s*[-–]\s*([\d.,]+)$/)
@@ -27,93 +24,148 @@ function BarraRango({ valor, rango }) {
   const pos = (x) => Math.min(100, Math.max(0, ((x - inicio) / (fin - inicio)) * 100))
 
   return (
-    <div className="barra-rango" aria-hidden="true">
-      <div className="barra-rango__normal" style={{ left: `${pos(min)}%`, width: `${pos(max) - pos(min)}%` }} />
-      <div className="barra-rango__punto" style={{ left: `${pos(v)}%` }} />
-    </div>
+    <span className={`escala escala--${estado}`} aria-hidden="true">
+      <span className="escala__rango" style={{ left: `${pos(min)}%`, width: `${pos(max) - pos(min)}%` }} />
+      <span className="escala__marca" style={{ left: `${pos(v)}%` }} />
+    </span>
   )
+}
+
+// "> 40" -> "más de 40"; "70 - 100" -> "70 a 100"
+function rangoEnPalabras(rango) {
+  if (!rango) return 'sin rango impreso'
+  return 'ref. ' + rango
+    .replace(/^\s*[<≤]=?\s*/, 'menos de ')
+    .replace(/^\s*[>≥]=?\s*/, 'más de ')
+    .replace(/\s*[-–]\s*/, ' a ')
 }
 
 export default function ResultadoInforme({ informe, onNuevo }) {
   const [filtro, setFiltro] = useState('todos')
   const [copiado, setCopiado] = useState(false)
+  const [desprendibleVisible, setDesprendibleVisible] = useState(false)
+  const [cabeceraVisible, setCabeceraVisible] = useState(true)
+  const desprendible = useRef(null)
+  const cabecera = useRef(null)
 
-  const fuera = informe.valores.filter((v) => v.estado === 'alto' || v.estado === 'bajo')
+  const total = informe.valores.length
+  const fuera = informe.valores.filter((v) => fueraDeRango(v.estado))
   const visibles = filtro === 'fuera' ? fuera : informe.valores
+  const fecha = new Date(informe.fecha_carga).toLocaleDateString('es-CO', { dateStyle: 'long' })
+  const preguntas = informe.preguntas.length
+
+  // En el celular, la barra inferior aparece cuando ya bajaste por la lista
+  // y se oculta cuando el desprendible completo está a la vista.
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return
+    const obsDesprendible = new IntersectionObserver(([e]) => setDesprendibleVisible(e.isIntersecting), { threshold: 0.15 })
+    const obsCabecera = new IntersectionObserver(([e]) => setCabeceraVisible(e.isIntersecting))
+    if (desprendible.current) obsDesprendible.observe(desprendible.current)
+    if (cabecera.current) obsCabecera.observe(cabecera.current)
+    return () => {
+      obsDesprendible.disconnect()
+      obsCabecera.disconnect()
+    }
+  }, [])
 
   const copiarPreguntas = async () => {
-    const texto = informe.preguntas.map((p, i) => `${i + 1}. ${p.texto_pregunta}`).join('\n')
-    await navigator.clipboard.writeText(texto)
-    setCopiado(true)
-    setTimeout(() => setCopiado(false), 2000)
+    const texto = 'Preguntas para mi cita\n\n'
+      + informe.preguntas.map((p, i) => `${i + 1}. ${p.texto_pregunta}`).join('\n')
+    try {
+      await navigator.clipboard.writeText(texto)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2500)
+    } catch {
+      setCopiado(false)
+    }
+  }
+
+  const imprimir = () => {
+    setFiltro('todos')
+    setTimeout(() => window.print(), 50)
   }
 
   return (
     <section className="resultado">
-      <div className="resultado__cabecera">
-        <div>
-          <h1>{informe.nombre_archivo}</h1>
-          <p className="tenue">
-            {new Date(informe.fecha_carga).toLocaleString('es-CO', { dateStyle: 'long', timeStyle: 'short' })}
-            {' · '}motor: <code>{informe.motor}</code>
-          </p>
-        </div>
-        <button className="boton boton--secundario" onClick={onNuevo}>Subir otro informe</button>
-      </div>
+      <article className="hoja hoja--rayada resultado__hoja">
+        <header className="resultado__cabecera" ref={cabecera}>
+          <h1>
+            {fuera.length
+              ? `${fuera.length} de ${total} valores para conversar con tu médico`
+              : `Tus ${total} valores están dentro del rango`}
+          </h1>
+          <p className="resultado__meta">{partible(informe.nombre_archivo)} · <span className="sin-corte">{fecha}</span></p>
+          <p className="aviso"><Info size={18} aria-hidden="true" /> {informe.aviso}</p>
+        </header>
 
-      <p className="alerta alerta--aviso">{informe.aviso}</p>
-
-      <div className="tarjeta resumen">
-        <h2>Resumen</h2>
-        <p>{informe.resumen}</p>
-        <div className="cifras">
-          <div><strong>{informe.valores.length}</strong><span>valores</span></div>
-          <div><strong>{informe.valores.length - fuera.length}</strong><span>dentro del rango</span></div>
-          <div className={fuera.length ? 'cifras--atencion' : ''}>
-            <strong>{fuera.length}</strong><span>para conversar con tu médico</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="layout-resultado">
-        <div>
-          <div className="filtros">
-            <h2>Tus valores</h2>
-            <div className="segmentado">
-              <button className={filtro === 'todos' ? 'activo' : ''} onClick={() => setFiltro('todos')}>Todos</button>
-              <button className={filtro === 'fuera' ? 'activo' : ''} onClick={() => setFiltro('fuera')}>
-                Fuera de rango ({fuera.length})
-              </button>
-            </div>
-          </div>
-
-          <ul className="valores">
-            {visibles.map((v) => (
-              <li key={v.id} className={`tarjeta valor valor--${v.estado}`}>
-                <div className="valor__fila">
-                  <h3>{v.nombre_valor}</h3>
-                  <span className={`etiqueta etiqueta--${v.estado}`}>{ETIQUETAS[v.estado]}</span>
-                </div>
-                <p className="valor__dato">
-                  <strong>{v.valor}</strong> {v.unidad}
-                  {v.rango_referencia && <span className="tenue"> · referencia {v.rango_referencia}</span>}
-                </p>
-                {v.rango_referencia && <BarraRango valor={v.valor} rango={v.rango_referencia} />}
-                <p>{v.explicacion_ia}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <aside className="tarjeta preguntas">
-          <h2>Preguntas para tu próxima consulta</h2>
-          <ol>
-            {informe.preguntas.map((p) => <li key={p.id}>{p.texto_pregunta}</li>)}
-          </ol>
-          <button className="boton boton--secundario" onClick={copiarPreguntas}>
-            {copiado ? '¡Copiadas!' : 'Copiar preguntas'}
+        <div className="pestanas pestanas--filtro" role="group" aria-label="Filtrar valores">
+          <button className={filtro === 'todos' ? 'activa' : ''} aria-pressed={filtro === 'todos'}
+            onClick={() => setFiltro('todos')}>
+            Todos <span className="cifra">{total}</span>
           </button>
-        </aside>
+          <button className={filtro === 'fuera' ? 'activa' : ''} aria-pressed={filtro === 'fuera'}
+            onClick={() => setFiltro('fuera')}>
+            Para conversar <span className="cifra">{fuera.length}</span>
+          </button>
+        </div>
+
+        <h2 className="sr-only">Tus valores</h2>
+        <ul className="valores">
+          {visibles.map((v, i) => (
+            <li key={v.id} className={`valor valor--${v.estado}`}>
+              <span className="valor__nombre">{v.nombre_valor}</span>
+              <span className="valor__cifra"><span className="valor__numero">{v.valor}</span><small>{v.unidad}</small></span>
+              <span className="valor__rango">{rangoEnPalabras(v.rango_referencia)}</span>
+              <span className="valor__sello"><Sello estado={v.estado} orden={i} /></span>
+              {v.rango_referencia && <Escala valor={v.valor} rango={v.rango_referencia} estado={v.estado} />}
+              <p className="valor__frase">{v.explicacion_ia}</p>
+            </li>
+          ))}
+        </ul>
+        {visibles.length === 0 && (
+          <p className="vacio">Ningún valor quedó fuera del rango de referencia del laboratorio.</p>
+        )}
+
+        <section className="resultado__resumen" aria-labelledby="titulo-resumen">
+          <h2 id="titulo-resumen">En resumen</h2>
+          <p>{informe.resumen}</p>
+        </section>
+        <button className="boton boton--secundario resultado__nuevo" onClick={onNuevo}>
+          <FilePlus2 size={19} aria-hidden="true" /> Subir otro informe
+        </button>
+        <p className="resultado__motor">Motor de interpretación: {informe.motor}</p>
+      </article>
+
+      <aside className="desprendible" id="desprendible" ref={desprendible} aria-labelledby="titulo-desprendible">
+        <div className="desprendible__corte" aria-hidden="true"><Scissors size={18} /></div>
+        <h2 id="titulo-desprendible">Para tu cita</h2>
+        <p className="desprendible__sub">Preguntas para llevarle a tu médico</p>
+        <ol>
+          {informe.preguntas.map((p, i) => (
+            <li key={p.id}><span className="cifra" aria-hidden="true">{i + 1}</span>{p.texto_pregunta}</li>
+          ))}
+        </ol>
+        <div className="desprendible__acciones">
+          <button className="boton" onClick={copiarPreguntas}>
+            {copiado ? <Check size={19} aria-hidden="true" /> : <Copy size={19} aria-hidden="true" />}
+            {copiado ? 'Preguntas copiadas' : 'Copiar preguntas'}
+          </button>
+          <button className="boton boton--secundario" onClick={imprimir}>
+            <Printer size={19} aria-hidden="true" /> Imprimir hoja
+          </button>
+        </div>
+        <p className="sr-only" role="status">{copiado ? 'Las preguntas se copiaron al portapapeles' : ''}</p>
+      </aside>
+
+      <div className={`barra-cita ${desprendibleVisible || cabeceraVisible ? 'barra-cita--oculta' : ''}`}>
+        <a className="barra-cita__ir" href="#desprendible" aria-label={`Ir a tus ${preguntas} preguntas para la cita`}>
+          <Scissors size={18} aria-hidden="true" />
+          <span>Tus {preguntas} preguntas</span>
+        </a>
+        <button className="boton" onClick={copiarPreguntas}>
+          {copiado ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+          {copiado ? 'Copiadas' : 'Copiar'}
+        </button>
       </div>
     </section>
   )
