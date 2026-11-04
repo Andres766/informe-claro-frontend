@@ -1,0 +1,522 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T07:26:29.409Z",
+  "title": "Design System: InformeClaro",
+  "extensions": {
+    "colorMeta": {
+      "mesa": {
+        "role": "neutral",
+        "displayName": "Desk",
+        "canonical": "#E6EAF2",
+        "oklch": "oklch(93.6% 0.012 264.5)",
+        "tonalRamp": [
+          "#0A0B0C",
+          "#222427",
+          "#3D4045",
+          "#5A5E64",
+          "#7D8087",
+          "#A1A5AB",
+          "#C8CACF",
+          "#EDEEF0"
+        ]
+      },
+      "papel": {
+        "role": "neutral",
+        "displayName": "Pad Paper",
+        "canonical": "#F6F7FB",
+        "oklch": "oklch(97.7% 0.005 275.0)",
+        "tonalRamp": [
+          "#0B0B0C",
+          "#232425",
+          "#3F4042",
+          "#5D5D61",
+          "#7F8083",
+          "#A4A4A7",
+          "#CACACC",
+          "#EEEEEF"
+        ]
+      },
+      "blanco": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242424",
+          "#404040",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
+        ]
+      },
+      "tinta": {
+        "role": "primary",
+        "displayName": "Ballpoint Blue",
+        "canonical": "#1F3FA8",
+        "oklch": "oklch(41.6% 0.173 265.9)",
+        "tonalRamp": [
+          "#040A1E",
+          "#0E1F51",
+          "#1B368A",
+          "#2F53BD",
+          "#4F78E6",
+          "#78A0FF",
+          "#AECAFF",
+          "#E0EFFF"
+        ]
+      },
+      "tinta-hover": {
+        "role": "primary",
+        "displayName": "Pressed Ballpoint",
+        "canonical": "#172F80",
+        "oklch": "oklch(34.4% 0.140 266.2)",
+        "tonalRamp": [
+          "#050A1A",
+          "#132148",
+          "#233A7C",
+          "#3857AC",
+          "#597BD3",
+          "#82A2F0",
+          "#B3CAFD",
+          "#E3EFFF"
+        ]
+      },
+      "tinta-suave": {
+        "role": "primary",
+        "displayName": "Blue Wash",
+        "canonical": "#E1E7F7",
+        "oklch": "oklch(92.8% 0.023 269.4)",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#22242A",
+          "#3C3F4A",
+          "#585D6B",
+          "#7B808E",
+          "#A0A4B1",
+          "#C7CAD3",
+          "#EDEEF2"
+        ]
+      },
+      "sello": {
+        "role": "secondary",
+        "displayName": "Stamp Violet",
+        "canonical": "#5B3A9B",
+        "oklch": "oklch(44.0% 0.151 295.1)",
+        "tonalRamp": [
+          "#0D071A",
+          "#281947",
+          "#462C7A",
+          "#6646A8",
+          "#886AD0",
+          "#AB93ED",
+          "#CEC0FB",
+          "#F0EAFF"
+        ]
+      },
+      "sello-suave": {
+        "role": "secondary",
+        "displayName": "Violet Wash",
+        "canonical": "#EEE9F6",
+        "oklch": "oklch(94.2% 0.018 303.4)",
+        "tonalRamp": [
+          "#0B0B0D",
+          "#252328",
+          "#413E46",
+          "#605B66",
+          "#827E89",
+          "#A6A2AD",
+          "#CCC9D0",
+          "#EFEEF1"
+        ]
+      },
+      "texto": {
+        "role": "neutral",
+        "displayName": "Carbon",
+        "canonical": "#23262E",
+        "oklch": "oklch(26.9% 0.016 269.1)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#222428",
+          "#3D4047",
+          "#5A5D67",
+          "#7C808A",
+          "#A1A4AD",
+          "#C8CAD0",
+          "#EDEEF1"
+        ]
+      },
+      "texto-2": {
+        "role": "neutral",
+        "displayName": "Pencil Grey",
+        "canonical": "#4D5464",
+        "oklch": "oklch(44.6% 0.028 266.6)",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#21242C",
+          "#3A404C",
+          "#565E6E",
+          "#798091",
+          "#9EA5B4",
+          "#C6CAD5",
+          "#ECEEF3"
+        ]
+      },
+      "renglon": {
+        "role": "neutral",
+        "displayName": "Blue Rule",
+        "canonical": "#C9D3E6",
+        "oklch": "oklch(86.5% 0.028 263.4)",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#20242C",
+          "#39404D",
+          "#555E6E",
+          "#778092",
+          "#9DA5B4",
+          "#C5CBD5",
+          "#ECEEF4"
+        ]
+      },
+      "renglon-fuerte": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#9EAECF",
+        "oklch": "oklch(75.0% 0.051 264.8)",
+        "tonalRamp": [
+          "#080B11",
+          "#1D2432",
+          "#354057",
+          "#4F5D7B",
+          "#71809F",
+          "#97A5C1",
+          "#C2CBDD",
+          "#EAEFF8"
+        ]
+      },
+      "renglon-claro": {
+        "role": "neutral",
+        "displayName": "Faint Rule",
+        "canonical": "#D6DEEE",
+        "oklch": "oklch(89.9% 0.024 264.4)",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#21242A",
+          "#3B404A",
+          "#575E6B",
+          "#79808F",
+          "#9EA5B2",
+          "#C6CBD3",
+          "#ECEEF3"
+        ]
+      },
+      "margen": {
+        "role": "neutral",
+        "displayName": "Margin Pink",
+        "canonical": "#E8BCCB",
+        "oklch": "oklch(83.8% 0.054 355.9)",
+        "tonalRamp": [
+          "#10090B",
+          "#301E24",
+          "#533640",
+          "#77515F",
+          "#9B7381",
+          "#BD99A5",
+          "#DBC3CB",
+          "#F7EBEF"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "#A3262A",
+        "oklch": "oklch(47.3% 0.161 24.4)",
+        "tonalRamp": [
+          "#190404",
+          "#460B0D",
+          "#771218",
+          "#A5282C",
+          "#CF504E",
+          "#EF7F79",
+          "#FFB4AE",
+          "#FFE4E1"
+        ]
+      },
+      "error-suave": {
+        "role": "error",
+        "displayName": "Error Wash",
+        "canonical": "#FBECEC",
+        "oklch": "oklch(95.5% 0.016 17.4)",
+        "tonalRamp": [
+          "#0D0A0A",
+          "#282222",
+          "#473D3D",
+          "#675A5A",
+          "#8A7C7D",
+          "#ADA1A1",
+          "#D0C8C8",
+          "#F1EDED"
+        ]
+      },
+      "logo-teal": {
+        "role": "tertiary",
+        "displayName": "Logo Teal",
+        "canonical": "#0F766E",
+        "oklch": "oklch(51.1% 0.086 186.4)",
+        "tonalRamp": [
+          "#020E0D",
+          "#002B28",
+          "#004C46",
+          "#006D65",
+          "#369188",
+          "#6CB4AC",
+          "#A9D5CF",
+          "#DFF4F1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Sign-in opening statement only, max ~18ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page headings; on results the heading is the count itself (1.5rem, 1.625rem when the sheet is 480px or wider)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section and slip headings."
+      },
+      "value-name": {
+        "displayName": "Value name",
+        "purpose": "Name of each lab value on the ruled sheet."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Intro paragraph under a page heading, Pencil Grey, max 60ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explanations and questions; 17px root; 1.75rem pitch on the ruled sheet; max 65ch."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Buttons, tabs, nav, field labels."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Metadata, captions, disclaimer, engine line, footer."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Uppercase stamp lettering in the text face."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Measured values in Mono, tabular, Ballpoint Blue."
+      },
+      "unit": {
+        "displayName": "Unit",
+        "purpose": "Units after figures, Mono 500, Pencil Grey."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sombra-hoja",
+        "value": "0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22)",
+        "purpose": "Every sheet and the tear-off slip; the only elevation in the system."
+      },
+      {
+        "name": "barra-cita",
+        "value": "0 -8px 20px -14px rgb(23 47 128 / 0.3)",
+        "purpose": "Upward shadow of the phone bottom bar."
+      },
+      {
+        "name": "halo-marca",
+        "value": "0 0 0 2px #F6F7FB",
+        "purpose": "Paper cut-out around the range-scale dot."
+      }
+    ],
+    "motion": [
+      {
+        "name": "sellar",
+        "value": "0.5s cubic-bezier(0.16, 1, 0.3, 1); scale 1.3 to 1 at rotate(-3deg); delay order x 70ms + 120ms",
+        "purpose": "One press of out-of-range stamps on arrival."
+      },
+      {
+        "name": "barra-cita-slide",
+        "value": "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); hidden at translateY(110%)",
+        "purpose": "Phone bottom bar hides while sheet head or slip is visible."
+      },
+      {
+        "name": "color-hover",
+        "value": "0.15s ease-out",
+        "purpose": "Button and drop-zone colour changes."
+      },
+      {
+        "name": "girar",
+        "value": "1s linear infinite rotate",
+        "purpose": "Loading spinner."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition durations 0.01ms under prefers-reduced-motion: reduce",
+        "purpose": "Collapses all motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-max",
+        "value": "640px"
+      },
+      {
+        "name": "sheet-container",
+        "value": "480px (container query on the sheet)"
+      },
+      {
+        "name": "access-two-col",
+        "value": "900px"
+      },
+      {
+        "name": "results-two-col",
+        "value": "960px"
+      },
+      {
+        "name": "container",
+        "value": "1120px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ballpoint-blue filled action (upload, copy questions, sign in).",
+      "html": "<button class=\"ds-btn ds-btn-primary\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"14\" height=\"14\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg> Copiar preguntas</button>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;min-height:48px;padding:0.7rem 1.25rem;border:1.5px solid var(--tinta);border-radius:var(--radio);font:600 1rem/1.55 var(--fuente);cursor:pointer;transition:background-color 0.15s ease-out;} .ds-btn:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-btn-primary{background:var(--tinta);color:var(--blanco);} .ds-btn-primary:hover{background:var(--tinta-hover);border-color:var(--tinta-hover);} .ds-btn-primary:disabled{background:#8E9BC6;border-color:#8E9BC6;cursor:not-allowed;}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White button with blue ink border; companion action (print, choose file, upload another).",
+      "html": "<button class=\"ds-btn ds-btn-secondary\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3h12v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/></svg> Imprimir hoja</button>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;min-height:48px;padding:0.7rem 1.25rem;border:1.5px solid var(--tinta);border-radius:var(--radio);font:600 1rem/1.55 var(--fuente);cursor:pointer;transition:background-color 0.15s ease-out;} .ds-btn:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-btn-secondary{background:var(--blanco);color:var(--tinta);} .ds-btn-secondary:hover{background:var(--tinta-suave);}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled field on white with a strong-rule border; blue on hover, global blue focus ring.",
+      "html": "<label class=\"ds-campo\"><span>Correo electrónico</span><input type=\"email\" placeholder=\"tu@correo.com\"></label>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-campo{display:grid;gap:0.4rem;max-width:22rem;} .ds-campo span{font-weight:600;} .ds-campo input{min-height:50px;padding:0.7rem 0.85rem;font:inherit;color:var(--texto);background:var(--blanco);border:1.5px solid var(--renglon-fuerte);border-radius:var(--radio);} .ds-campo input:hover{border-color:var(--tinta);} .ds-campo input:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;}"
+    },
+    {
+      "name": "Underline Tabs",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Sign-in mode, results filter and app-bar navigation: grey 600 labels, active in blue with a 3px underline; counts in Mono.",
+      "html": "<div class=\"ds-pestanas\"><button class=\"activa\">Todos <span class=\"ds-cifra\">12</span></button><button>Para conversar <span class=\"ds-cifra\">4</span></button></div>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-pestanas{display:flex;border-bottom:1px solid var(--renglon);} .ds-pestanas button{display:inline-flex;align-items:center;gap:0.5rem;min-height:48px;padding:0 1rem;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;color:var(--texto-2);font:600 1rem var(--fuente);cursor:pointer;} .ds-pestanas button:hover{color:var(--tinta);} .ds-pestanas button.activa{color:var(--tinta);border-bottom-color:var(--tinta);font-weight:800;} .ds-pestanas button:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-cifra{font-family:var(--cifras);font-variant-numeric:tabular-nums;font-weight:700;}"
+    },
+    {
+      "name": "Stamp (four states)",
+      "kind": "chip",
+      "refersTo": "stamp-out-of-range",
+      "description": "Rubber stamp in a fixed cell: violet double frame tilted and pressed for alto/bajo; straight blue-outlined for normal; dashed grey for sin_rango. Always icon plus word.",
+      "html": "<div class=\"ds-fila\"><span class=\"ds-sello ds-sello--fuera\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg> Por encima</span><span class=\"ds-sello ds-sello--fuera\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14\"/><path d=\"m19 12-7 7-7-7\"/></svg> Por debajo</span><span class=\"ds-sello ds-sello--normal\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg> En rango</span><span class=\"ds-sello ds-sello--sin\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/></svg> Sin rango</span></div>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-sello{display:inline-flex;align-items:center;gap:0.3rem;padding:0.22rem 0.45rem 0.18rem;border-radius:3px;font:800 0.75rem/1 var(--fuente);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;} .ds-fila{display:flex;gap:1rem;flex-wrap:wrap;padding:1rem;background:var(--papel);} .ds-sello--fuera{color:var(--sello);border:4px double var(--sello);transform:rotate(-3deg);animation:ds-sellar 0.5s cubic-bezier(0.16,1,0.3,1) 0.12s both;} .ds-sello--normal{color:var(--tinta);border:1.5px solid var(--renglon-fuerte);} .ds-sello--sin{color:var(--texto-2);border:1.5px dashed var(--renglon-fuerte);} @keyframes ds-sellar{from{transform:rotate(-3deg) scale(1.3);}to{transform:rotate(-3deg) scale(1);}} @media (prefers-reduced-motion: reduce){.ds-sello--fuera{animation:none;}}"
+    },
+    {
+      "name": "Ruled Sheet Value Row",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Pad-paper sheet with pink margin rule and 1.75rem ruling; a value row with name, stamp, Mono figure and unit, printed range, range scale and one plain sentence.",
+      "html": "<div class=\"ds-hoja\"><div class=\"ds-valor\"><span class=\"ds-valor__nombre\">Colesterol HDL</span><span class=\"ds-valor__sello\"><span class=\"ds-sello ds-sello--fuera\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14\"/><path d=\"m19 12-7 7-7-7\"/></svg> Por debajo</span></span><span class=\"ds-valor__cifra\">36<small>mg/dL</small></span><span class=\"ds-valor__rango\">ref. más de 40</span><span class=\"ds-escala\"><span class=\"ds-escala__rango\" style=\"left:30%;width:50%\"></span><span class=\"ds-escala__marca\" style=\"left:18%\"></span></span><p class=\"ds-valor__frase\">Tu resultado está por debajo del rango de referencia del laboratorio. Es un buen tema para conversar con tu médico.</p></div></div>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-sello{display:inline-flex;align-items:center;gap:0.3rem;padding:0.22rem 0.45rem 0.18rem;border-radius:3px;font:800 0.75rem/1 var(--fuente);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;} .ds-hoja{--pauta:1.75rem;position:relative;max-width:36rem;background-color:var(--papel);border:1px solid var(--renglon);border-radius:var(--radio);box-shadow:var(--sombra-hoja);padding:var(--pauta) 2rem var(--pauta) 3.25rem;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--pauta) - 1px),var(--renglon-claro) calc(var(--pauta) - 1px),var(--renglon-claro) var(--pauta));} .ds-hoja::before{content:\"\";position:absolute;top:0;bottom:0;left:1.9rem;width:1px;background:var(--margen);} .ds-hoja *{line-height:var(--pauta);} .ds-hoja .ds-sello{line-height:1;} .ds-valor{display:grid;grid-template-columns:9rem minmax(0,1fr) auto;column-gap:1rem;grid-template-areas:\"nombre nombre sello\" \"cifra rango rango\" \"escala escala escala\" \"frase frase frase\";} .ds-valor__nombre{grid-area:nombre;font-weight:800;font-size:1.125rem;} .ds-valor__sello{grid-area:sello;align-self:center;justify-self:end;} .ds-sello--fuera{color:var(--sello);border:4px double var(--sello);transform:rotate(-3deg);} .ds-valor__cifra{grid-area:cifra;font-family:var(--cifras);font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:700;color:var(--tinta);} .ds-valor__cifra small{font-size:0.9375rem;font-weight:500;color:var(--texto-2);margin-left:0.4rem;} .ds-valor__rango{grid-area:rango;font-size:0.9375rem;color:var(--texto-2);font-variant-numeric:tabular-nums;} .ds-valor__frase{grid-area:frase;margin:0;max-width:65ch;} .ds-escala{grid-area:escala;position:relative;display:block;height:var(--pauta);max-width:22rem;} .ds-escala::before{content:\"\";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--renglon-fuerte);} .ds-escala__rango{position:absolute;top:calc(50% - 6px);height:13px;border-left:2px solid var(--tinta);border-right:2px solid var(--tinta);background:linear-gradient(to bottom,transparent 5.5px,var(--tinta) 5.5px,var(--tinta) 7.5px,transparent 7.5px);} .ds-escala__marca{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--sello);box-shadow:0 0 0 2px var(--papel);transform:translate(-50%,-50%);}"
+    },
+    {
+      "name": "Tear-off Slip",
+      "kind": "custom",
+      "refersTo": "tear-off-slip",
+      "description": "\"Para tu cita\": white slip with a dashed perforated top edge and scissors, numbered questions in blue Mono, copy and print actions.",
+      "html": "<aside class=\"ds-desprendible\"><div class=\"ds-corte\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"6\" r=\"3\"/><path d=\"M8.12 8.12 12 12\"/><path d=\"M20 4 8.12 15.88\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><path d=\"M14.8 14.8 20 20\"/></svg></div><h2>Para tu cita</h2><p class=\"ds-sub\">Preguntas para llevarle a tu médico</p><ol><li><span>1</span>¿Qué significa para mí que mi colesterol HDL esté por debajo del rango de referencia?</li><li><span>2</span>¿Cómo se comparan estos resultados con mis exámenes anteriores?</li></ol><button class=\"ds-btn ds-btn-primary\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"14\" height=\"14\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg> Copiar preguntas</button></aside>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;min-height:48px;padding:0.7rem 1.25rem;border:1.5px solid var(--tinta);border-radius:var(--radio);font:600 1rem/1.55 var(--fuente);cursor:pointer;transition:background-color 0.15s ease-out;} .ds-btn:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-btn-primary{background:var(--tinta);color:var(--blanco);} .ds-btn-primary:hover{background:var(--tinta-hover);border-color:var(--tinta-hover);} .ds-desprendible{position:relative;max-width:22rem;background:var(--blanco);border:1px solid var(--renglon);border-top:2px dashed var(--renglon-fuerte);border-radius:0 0 var(--radio) var(--radio);box-shadow:var(--sombra-hoja);padding:1.75rem 1.5rem 1.5rem;margin-top:1rem;} .ds-corte{position:absolute;top:-13px;left:1rem;display:grid;place-items:center;width:26px;height:24px;background:var(--mesa);color:var(--texto-2);} .ds-desprendible h2{margin:0;font-size:1.25rem;font-weight:800;line-height:1.2;} .ds-sub{margin:0.2rem 0 0;color:var(--texto-2);} .ds-desprendible ol{list-style:none;margin:1rem 0 1.25rem;padding:0;border-top:1px solid var(--renglon);} .ds-desprendible li{display:grid;grid-template-columns:1.6rem minmax(0,1fr);gap:0.5rem;padding:0.75rem 0;border-bottom:1px solid var(--renglon);} .ds-desprendible li span{font-family:var(--cifras);font-variant-numeric:tabular-nums;font-weight:700;color:var(--tinta);} .ds-desprendible .ds-btn{width:100%;}"
+    },
+    {
+      "name": "Phone Bottom Bar",
+      "kind": "nav",
+      "refersTo": "tear-off-slip",
+      "description": "Below 960px: fixed white bar with a perforated top edge linking to the slip and offering copy; slides away while the sheet head or slip is visible.",
+      "html": "<div class=\"ds-barra-cita\"><a class=\"ds-ir\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"6\" r=\"3\"/><path d=\"M8.12 8.12 12 12\"/><path d=\"M20 4 8.12 15.88\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><path d=\"M14.8 14.8 20 20\"/></svg><span>6 preguntas para tu cita</span></a><button class=\"ds-btn ds-btn-primary\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"14\" height=\"14\" rx=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg> Copiar</button></div>",
+      "css": ":host{--mesa:#E6EAF2;--papel:#F6F7FB;--blanco:#FFFFFF;--tinta:#1F3FA8;--tinta-hover:#172F80;--tinta-suave:#E1E7F7;--sello:#5B3A9B;--texto:#23262E;--texto-2:#4D5464;--renglon:#C9D3E6;--renglon-fuerte:#9EAECF;--renglon-claro:#D6DEEE;--margen:#E8BCCB;--error:#A3262A;--error-suave:#FBECEC;--radio:4px;--sombra-hoja:0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);--fuente:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;--cifras:'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;font-family:var(--fuente);font-size:17px;color:var(--texto);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;min-height:48px;padding:0.7rem 1.25rem;border:1.5px solid var(--tinta);border-radius:var(--radio);font:600 1rem/1.55 var(--fuente);cursor:pointer;transition:background-color 0.15s ease-out;} .ds-btn:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-btn-primary{background:var(--tinta);color:var(--blanco);} .ds-btn-primary:hover{background:var(--tinta-hover);border-color:var(--tinta-hover);} .ds-barra-cita{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;padding:0.6rem 1rem;background:var(--blanco);border-top:2px dashed var(--renglon-fuerte);box-shadow:0 -8px 20px -14px rgb(23 47 128 / 0.3);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);} .ds-ir{display:inline-flex;align-items:center;gap:0.5rem;min-height:44px;font-weight:700;color:var(--tinta);text-decoration:none;} .ds-ir:hover{text-decoration:underline;text-underline-offset:0.2em;} .ds-ir:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;} .ds-barra-cita .ds-btn{min-height:44px;padding:0.45rem 1rem;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Hoja para la cita (the sheet for the appointment)",
+    "overview": "InformeClaro is a consulting-room pad, not a dashboard. Each report becomes a sheet of pale pad paper laid on a cool blue-grey desk, ruled in faint blue at a fixed pitch, with a single pink margin rule down the left. Figures and actions are written in ballpoint-blue ink; the only other ink in the room is the violet of a rubber stamp, pressed beside the values worth discussing with the doctor. The questions for the appointment sit on a separate tear-off slip with a perforated top edge, ready to copy or print.\n\nThe system is calm and legible before it is anything else. The root size is 17px (106.25%) for older readers, every target is at least 44px and most are 48px, the whole UI uses one hyperlegible family with its monospace sibling reserved for numbers, and state is always a word plus an icon inside a stamp frame, never a colour alone. It deliberately refuses the clinical card dashboard with green, amber and red badges: there is no traffic-light palette anywhere, and out of range is violet, not red. Red exists only for real system errors.\n\nDepth is paper on a desk: soft blue-tinted sheet shadows, hairline rules, dashed perforations. Motion is one short stamp press when values arrive and a slide for the phone's bottom bar; everything collapses under reduced motion. The sheet also prints: the print stylesheet strips the chrome and leaves the sheet and slip on white paper.",
+    "keyCharacteristics": [
+      "Ruled sheet whose rules are the real vertical grid (1.75rem pitch).",
+      "Two inks only: ballpoint blue for figures and actions, violet stamp ink for out-of-range marks.",
+      "Four-state rubber stamp in a fixed right-hand cell, text label always present.",
+      "Printed range scale under each figure: two blue ticks bracketing the range, a ballpoint dot for the value.",
+      "Perforated tear-off slip \"Para tu cita\"; on phones, a perforated bottom bar keeps it in reach.",
+      "One type family (Atkinson Hyperlegible Next) with its Mono sibling only for figures, units and ranges.",
+      "The logo stays teal and is the only teal in the system."
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "Content ink is ballpoint blue or stamp violet, nothing else. Violet means \"a value outside the laboratory's printed range\" and appears nowhere else.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Traffic Light Rule",
+        "body": "No green, amber or red value states. In-range is a blue-outlined stamp; red is reserved for system errors and destructive hover.",
+        "section": "colors"
+      },
+      {
+        "name": "The Teal Stays In The Logo Rule",
+        "body": "The logo's teal is a brand asset, not a palette colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Is For Numbers Rule",
+        "body": "Atkinson Hyperlegible Mono sets figures, units, ranges and counts only (including tab counts and slip numbering), always `tabular-nums`. Never prose, never stamps, never headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Weight Ladder Rule",
+        "body": "Hierarchy is carried by weight steps 400 / 600 / 800 within one family, not by switching faces.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "Only paper casts shadows, and only the Sheet shadow. Controls stay flat; hover changes ink, never height.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep every line on a ruled sheet on the 1.75rem pitch; size blocks inside the sheet in whole pitches.",
+      "**Do** set every figure, unit, range and count in Atkinson Hyperlegible Mono with tabular numerals, figures in Ballpoint Blue.",
+      "**Do** show value state as a stamp with an icon and a word in a fixed right-hand cell; state is never colour alone.",
+      "**Do** reserve Stamp Violet for out-of-range values and their marks.",
+      "**Do** keep targets at 48px (44px minimum for compact controls) and the 17px root size.",
+      "**Do** use the 4px stationery corner and the single Sheet shadow for paper surfaces.",
+      "**Do** keep the logo exactly as `public/favicon.svg`, teal included.",
+      "**Do** honour reduced motion and keep the print stylesheet producing a clean sheet and slip."
+    ],
+    "donts": [
+      "**Don't** introduce green, amber or red value badges or a clinical card dashboard.",
+      "**Don't** use red for anything but system errors and the destructive hover.",
+      "**Don't** use teal outside the logo.",
+      "**Don't** add a second display face or set prose, headings or stamps in the Mono.",
+      "**Don't** tilt or animate in-range or no-range stamps; only out-of-range stamps are pressed in at an angle.",
+      "**Don't** lift controls with shadows or translate them on hover."
+    ]
+  }
+}
