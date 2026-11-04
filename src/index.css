@@ -452,6 +452,9 @@ button:disabled { cursor: not-allowed; }
   .boton-eliminar { align-self: flex-end; margin-bottom: 0.85rem; }
 }
 
+@media (max-width: 480px) {
+  .cuenta__salir { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 @media (max-width: 420px) {
   .cuenta__nombre { display: none; }
 }
@@ -463,7 +466,13 @@ button:disabled { cursor: not-allowed; }
 /* --- Impresión: la hoja para llevar a la cita ---------------------------- */
 
 @media print {
-  :root { background: #fff; font-size: 11pt; }
+  /* La hoja impresa siempre sale en claro, aunque la pantalla esté en modo oscuro. */
+  :root:not([data-impresion]) {
+    color-scheme: light; background: #fff; font-size: 11pt;
+    --mesa: #FFFFFF; --papel: #FFFFFF; --superficie: #FFFFFF;
+    --tinta: #1F3FA8; --sello: #5B3A9B; --texto: #23262E; --texto-2: #4D5464;
+    --renglon: #C9D3E6; --renglon-fuerte: #9EAECF; --renglon-claro: #D6DEEE;
+  }
   .barra, .pie, .pestanas, .resultado__nuevo, .desprendible__acciones, .desprendible__corte, .barra-cita { display: none !important; }
   .hoja--rayada { background-image: none; }
   .contenido { padding: 0; max-width: none; }

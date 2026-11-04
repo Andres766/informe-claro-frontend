@@ -18,6 +18,7 @@ export function aplicarTema(tema) {
   const raiz = document.documentElement
   if (ATRIBUTO[tema]) raiz.dataset.theme = ATRIBUTO[tema]
   else delete raiz.dataset.theme
+  actualizarColorBarra(tema)
   try {
     localStorage.setItem(CLAVE, tema)
   } catch {
@@ -26,3 +27,12 @@ export function aplicarTema(tema) {
 }
 
 export const siguienteTema = (tema) => TEMAS[(TEMAS.indexOf(tema) + 1) % TEMAS.length]
+
+const COLOR_BARRA = { claro: '#FFFFFF', oscuro: '#222736' }
+export const sistemaOscuro = () => window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+
+// Pinta la barra del navegador (celulares, PWA) con el color de la barra de la app.
+export function actualizarColorBarra(tema) {
+  const efectivo = tema === 'sistema' ? (sistemaOscuro() ? 'oscuro' : 'claro') : tema
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', COLOR_BARRA[efectivo])
+}

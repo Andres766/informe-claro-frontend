@@ -83,8 +83,8 @@ export default function App() {
               </nav>
               <div className="cuenta">
                 <span className="cuenta__nombre" title={usuario.email}>{usuario.nombre.split(' ')[0]}</span>
-                <button className="boton-texto" onClick={salir}>
-                  <LogOut size={18} aria-hidden="true" /> {t('app.salir')}
+                <button className="boton-texto" onClick={salir} aria-label={t('app.salir')}>
+                  <LogOut size={18} aria-hidden="true" /> <span className="cuenta__salir">{t('app.salir')}</span>
                 </button>
               </div>
             </>

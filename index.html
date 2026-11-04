@@ -14,6 +14,8 @@
         var tema = localStorage.getItem('informeclaro_tema')
         if (tema === 'claro') document.documentElement.dataset.theme = 'light'
         else if (tema === 'oscuro') document.documentElement.dataset.theme = 'dark'
+        var oscuro = tema === 'oscuro' || (tema !== 'claro' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        if (oscuro) document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222736')
       } catch (e) {}
     </script>
   </head>
