@@ -4,7 +4,7 @@
 :root {
   --mesa: #E6EAF2;          /* fondo detrás de las hojas */
   --papel: #F6F7FB;         /* hoja de talonario */
-  --blanco: #FFFFFF;
+  --superficie: #FFFFFF;     /* barra, campos, desprendible */
   --tinta: #1F3FA8;         /* esfero azul: acciones y cifras */
   --tinta-hover: #172F80;
   --tinta-suave: #E1E7F7;
@@ -20,6 +20,11 @@
   --error-suave: #FBECEC;
   --radio: 4px;
   --sombra-hoja: 0 1px 2px rgb(23 47 128 / 0.06), 0 10px 28px -14px rgb(23 47 128 / 0.22);
+  --sombra-barra: 0 -8px 20px -14px rgb(23 47 128 / 0.3);
+  --sobre-tinta: #FFFFFF;    /* texto sobre botones de tinta */
+  --tinta-apagada: #8E9BC6;  /* botón deshabilitado */
+  --error-borde: #E8B9BB;
+  --seleccion: #D3DBF3;
 
   --fuente: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --cifras: 'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Mono', monospace;
@@ -36,7 +41,7 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; }
-::selection { background: #D3DBF3; color: var(--texto); }
+::selection { background: var(--seleccion); color: var(--texto); }
 :focus-visible { outline: 3px solid var(--tinta); outline-offset: 2px; }
 h1, h2, h3 { margin: 0; line-height: 1.2; color: var(--texto); text-wrap: balance; }
 h1 { font-size: clamp(1.625rem, 1.2rem + 1.5vw, 2.25rem); font-weight: 800; letter-spacing: -0.01em; }
@@ -56,7 +61,7 @@ button:disabled { cursor: not-allowed; }
 
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 
-.barra { background: var(--blanco); border-bottom: 1px solid var(--renglon); position: sticky; top: 0; z-index: 10; }
+.barra { background: var(--superficie); border-bottom: 1px solid var(--renglon); position: sticky; top: 0; z-index: 10; }
 .barra__interior {
   max-width: 1120px; margin: 0 auto; padding: 0.55rem clamp(1rem, 4vw, 2.5rem);
   display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1.5rem;
@@ -107,11 +112,11 @@ button:disabled { cursor: not-allowed; }
 .boton {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   min-height: 48px; padding: 0.7rem 1.25rem; border: 1.5px solid var(--tinta); border-radius: var(--radio);
-  background: var(--tinta); color: var(--blanco); font-weight: 600; transition: background-color 0.15s ease-out;
+  background: var(--tinta); color: var(--sobre-tinta); font-weight: 600; transition: background-color 0.15s ease-out;
 }
 .boton:hover:not(:disabled) { background: var(--tinta-hover); border-color: var(--tinta-hover); }
-.boton:disabled { background: #8E9BC6; border-color: #8E9BC6; }
-.boton--secundario { background: var(--blanco); color: var(--tinta); }
+.boton:disabled { background: var(--tinta-apagada); border-color: var(--tinta-apagada); }
+.boton--secundario { background: var(--superficie); color: var(--tinta); }
 .boton--secundario:hover:not(:disabled) { background: var(--tinta-suave); border-color: var(--tinta); }
 .boton--ancho { width: 100%; }
 .boton-texto {
@@ -131,13 +136,13 @@ button:disabled { cursor: not-allowed; }
 
 .alerta {
   display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.8rem 1rem; border-radius: var(--radio);
-  background: var(--error-suave); color: var(--error); border: 1px solid #E8B9BB;
+  background: var(--error-suave); color: var(--error); border: 1px solid var(--error-borde);
 }
 .alerta svg, .aviso svg { flex-shrink: 0; margin-top: 0.15rem; }
-.nota { padding: 0.8rem 1rem; border-radius: var(--radio); background: var(--blanco); border: 1px solid var(--renglon); color: var(--texto-2); }
+.nota { padding: 0.8rem 1rem; border-radius: var(--radio); background: var(--superficie); border: 1px solid var(--renglon); color: var(--texto-2); }
 .aviso {
   display: flex; gap: 0.6rem; padding: 0.7rem 0.9rem; border-radius: var(--radio);
-  background: var(--blanco); border: 1px solid var(--renglon); color: var(--texto); font-size: 0.9375rem;
+  background: var(--superficie); border: 1px solid var(--renglon); color: var(--texto); font-size: 0.9375rem;
 }
 .aviso svg { color: var(--tinta); }
 
@@ -235,7 +240,7 @@ button:disabled { cursor: not-allowed; }
 .campo small { color: var(--texto-2); }
 .campo input {
   width: 100%; min-height: 50px; padding: 0.7rem 0.85rem; font: inherit; color: var(--texto);
-  background: var(--blanco); border: 1.5px solid var(--renglon-fuerte); border-radius: var(--radio);
+  background: var(--superficie); border: 1.5px solid var(--renglon-fuerte); border-radius: var(--radio);
 }
 .campo input:hover { border-color: var(--tinta); }
 .campo__con-boton { display: flex; gap: 0.5rem; align-items: center; }
@@ -254,7 +259,7 @@ button:disabled { cursor: not-allowed; }
 .subir__hoja { display: grid; gap: 1.25rem; }
 .zona {
   display: grid; justify-items: center; gap: 0.85rem; padding: 2rem 1rem; text-align: center;
-  background: var(--blanco); border: 2px dashed var(--renglon-fuerte); border-radius: var(--radio); color: var(--tinta);
+  background: var(--superficie); border: 2px dashed var(--renglon-fuerte); border-radius: var(--radio); color: var(--tinta);
   transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
 }
 .zona p { color: var(--texto); }
@@ -307,7 +312,7 @@ button:disabled { cursor: not-allowed; }
 
 .desprendible {
   scroll-margin-top: 9rem; /* llega con el borde perforado visible bajo la barra fija */
-  position: relative; background: var(--blanco); border: 1px solid var(--renglon);
+  position: relative; background: var(--superficie); border: 1px solid var(--renglon);
   border-top: 2px dashed var(--renglon-fuerte); border-radius: 0 0 var(--radio) var(--radio);
   box-shadow: var(--sombra-hoja); padding: 1.75rem clamp(1rem, 3vw, 1.5rem) 1.5rem;
 }
@@ -329,8 +334,8 @@ button:disabled { cursor: not-allowed; }
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
   padding: 0.6rem clamp(1rem, 4vw, 2.5rem) calc(0.6rem + env(safe-area-inset-bottom));
-  background: var(--blanco); border-top: 2px dashed var(--renglon-fuerte);
-  box-shadow: 0 -8px 20px -14px rgb(23 47 128 / 0.3);
+  background: var(--superficie); border-top: 2px dashed var(--renglon-fuerte);
+  box-shadow: var(--sombra-barra);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
 }
 .barra-cita--oculta {
