@@ -37,6 +37,7 @@ const en = {
     ocultarPassword: 'Hide password',
     minimo: 'At least 8 characters.',
     enviando: 'One moment…',
+    despertando: 'The free server is waking up and can take up to a minute and a half. Please keep this page open.',
     botonCrear: 'Create my account',
     botonEntrar: 'Sign in',
   },

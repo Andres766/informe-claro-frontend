@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AlertCircle, Eye, EyeOff, FileX2, Lock, Stethoscope } from 'lucide-react'
 import { api, sesion } from '../api'
 import { useIdioma } from '../i18n/contexto'
@@ -11,6 +11,17 @@ export default function Acceso({ onIngreso, aviso }) {
   const [verPassword, setVerPassword] = useState(false)
   const [error, setError] = useState('')
   const [enviando, setEnviando] = useState(false)
+  const [lento, setLento] = useState(false)
+
+  // Si el servidor gratuito estaba dormido, la primera respuesta tarda: se explica en vez de dejar al usuario esperando.
+  useEffect(() => {
+    if (!enviando) return
+    const espera = setTimeout(() => setLento(true), 6000)
+    return () => {
+      clearTimeout(espera)
+      setLento(false)
+    }
+  }, [enviando])
 
   const esRegistro = modo === 'registro'
 
@@ -111,6 +122,7 @@ export default function Acceso({ onIngreso, aviso }) {
         <button className="boton" disabled={enviando}>
           {enviando ? t('acceso.enviando') : esRegistro ? t('acceso.botonCrear') : t('acceso.botonEntrar')}
         </button>
+        {lento && <p className="nota" role="status">{t('acceso.despertando')}</p>}
       </form>
     </section>
   )

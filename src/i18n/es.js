@@ -37,6 +37,7 @@ const es = {
     ocultarPassword: 'Ocultar contraseña',
     minimo: 'Mínimo 8 caracteres.',
     enviando: 'Un momento…',
+    despertando: 'El servidor gratuito se está despertando y puede tardar hasta un minuto y medio. No cierres esta página.',
     botonCrear: 'Crear mi cuenta',
     botonEntrar: 'Entrar',
   },
