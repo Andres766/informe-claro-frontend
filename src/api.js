@@ -101,4 +101,6 @@ export const api = {
   listarInformes: () => pedir('/informes'),
   verInforme: (id) => pedir(`/informes/${id}`),
   eliminarInforme: (id) => pedir(`/informes/${id}`, { method: 'DELETE' }),
+  // Solo para administradores: cuentas y cifras agregadas, nunca el contenido de los informes.
+  estadisticasAdmin: () => pedir('/admin/estadisticas'),
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FilePlus2, Files, LoaderCircle, LogOut } from 'lucide-react'
+import { FilePlus2, Files, LayoutDashboard, LoaderCircle, LogOut } from 'lucide-react'
 import { api, sesion } from './api'
 import { useIdioma } from './i18n/contexto'
 import Preferencias from './components/Preferencias'
@@ -8,13 +8,14 @@ import Acceso from './components/Acceso'
 import SubirInforme from './components/SubirInforme'
 import ResultadoInforme from './components/ResultadoInforme'
 import Historial from './components/Historial'
+import PanelAdmin from './components/PanelAdmin'
 
 export default function App() {
   const { t } = useIdioma()
   // undefined = comprobando la sesión guardada; null = sin sesión
   const [usuario, setUsuario] = useState(sesion.activa() ? undefined : null)
   const [avisoAcceso, setAvisoAcceso] = useState('')
-  const [vista, setVista] = useState('subir') // 'subir' | 'resultado' | 'historial'
+  const [vista, setVista] = useState('subir') // 'subir' | 'resultado' | 'historial' | 'admin'
   const [informe, setInforme] = useState(null)
   const [motor, setMotor] = useState(null)
 
@@ -56,7 +57,14 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }
 
-  const enHistorial = vista === 'historial'
+  // Sin `rol` (backend anterior) la cuenta se trata como usuario normal.
+  const esAdmin = (usuario?.rol ?? 'usuario') === 'admin'
+  // Pestaña resaltada: 'resultado' cuenta como parte de "Nuevo informe".
+  const pestana = vista === 'historial' || (vista === 'admin' && esAdmin) ? vista : 'subir'
+  const marcar = (nombre) => ({
+    className: pestana === nombre ? 'activa' : '',
+    'aria-current': pestana === nombre ? 'page' : undefined,
+  })
 
   return (
     <div className="app">
@@ -71,15 +79,18 @@ export default function App() {
 
           {usuario && (
             <>
-              <nav className="navegacion" aria-label={t('app.secciones')}>
-                <button className={!enHistorial ? 'activa' : ''} aria-current={!enHistorial ? 'page' : undefined}
-                  onClick={() => setVista('subir')}>
+              <nav className={`navegacion ${esAdmin ? 'navegacion--tres' : ''}`} aria-label={t('app.secciones')}>
+                <button {...marcar('subir')} onClick={() => setVista('subir')}>
                   <FilePlus2 size={19} aria-hidden="true" /> {t('app.nuevo')}
                 </button>
-                <button className={enHistorial ? 'activa' : ''} aria-current={enHistorial ? 'page' : undefined}
-                  onClick={() => setVista('historial')}>
+                <button {...marcar('historial')} onClick={() => setVista('historial')}>
                   <Files size={19} aria-hidden="true" /> {t('app.hojas')}
                 </button>
+                {esAdmin && (
+                  <button {...marcar('admin')} onClick={() => setVista('admin')}>
+                    <LayoutDashboard size={19} aria-hidden="true" /> {t('app.panel')}
+                  </button>
+                )}
               </nav>
               <div className="cuenta">
                 <span className="cuenta__nombre" title={usuario.email}>{usuario.nombre.split(' ')[0]}</span>
@@ -106,7 +117,8 @@ export default function App() {
         {usuario && vista === 'resultado' && informe && (
           <ResultadoInforme informe={informe} onNuevo={() => setVista('subir')} />
         )}
-        {usuario && enHistorial && <Historial onAbrir={mostrarInforme} onNuevo={() => setVista('subir')} />}
+        {usuario && vista === 'historial' && <Historial onAbrir={mostrarInforme} onNuevo={() => setVista('subir')} />}
+        {usuario && esAdmin && vista === 'admin' && <PanelAdmin />}
       </main>
 
       <footer className="pie">{t('app.pie')}</footer>

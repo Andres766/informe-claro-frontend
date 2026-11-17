@@ -440,6 +440,168 @@ button:disabled { cursor: not-allowed; }
 .vacio-historial { display: grid; gap: 0.75rem; justify-items: start; }
 .vacio-historial p { color: var(--texto-2); max-width: 55ch; }
 
+/* --- Panel de administración --------------------------------------------
+   Solo cuentas y cifras agregadas. Gráficas en CSS puro: una sola serie por gráfica,
+   barras finas con el extremo de dato redondeado y la base recta; tinta azul para la IA,
+   gris para el respaldo por reglas y violeta (el de los sellos) para lo fuera de rango. */
+
+:root { --reglas: #7B8396; }  /* gris de respaldo: >= 3:1 sobre el papel claro */
+:root[data-theme="dark"] { --reglas: #6E778C; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --reglas: #6E778C; }
+}
+
+.panel-admin { display: grid; gap: 1.5rem; }
+.panel-admin__cabecera { display: grid; gap: 0.75rem; justify-items: start; }
+.panel-admin__cabecera .aviso { max-width: 60ch; }
+
+/* Fichas de cifras */
+.fichas {
+  display: grid; gap: 0.75rem; margin: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+}
+.ficha {
+  /* subgrid: las cifras quedan alineadas aunque una etiqueta ocupe dos líneas */
+  display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; row-gap: 0.15rem; padding: 0.9rem 1rem;
+  background: var(--superficie); border: 1px solid var(--renglon); border-radius: var(--radio);
+}
+.ficha dt { align-self: end; font-size: 0.9375rem; font-weight: 600; color: var(--texto-2); }
+.ficha dd { margin: 0; }
+.ficha__valor { font-size: 2rem; font-weight: 800; line-height: 1.15; color: var(--tinta); letter-spacing: -0.01em; }
+.ficha__detalle { font-size: 0.875rem; color: var(--texto-2); }
+
+/* Tarjetas: hojas con título; dos columnas en pantallas anchas */
+.panel-admin__rejilla { display: grid; gap: 1.25rem; align-items: start; }
+.tarjeta { display: grid; gap: 0.35rem; min-width: 0; }
+.tarjeta h2 { font-size: 1.1875rem; }
+.tarjeta__entrada { font-size: 0.9375rem; color: var(--texto-2); max-width: 60ch; margin-bottom: 0.75rem; }
+.tarjeta__vacio { color: var(--texto-2); }
+@media (min-width: 960px) {
+  .panel-admin__rejilla { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tarjeta--ancha { grid-column: 1 / -1; }
+}
+
+/* Barras horizontales (motor y valores fuera de rango) */
+.barras { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.barras__item { display: grid; gap: 0.35rem; }
+.barras__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.barras__nombre { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+.barras__cifra { font-weight: 700; color: var(--texto); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.barras__pista { display: block; height: 10px; background: var(--renglon-claro); }
+.barras__relleno {
+  display: block; height: 100%; width: calc(var(--parte, 0) * 100%); min-width: 2px;
+  background: var(--tinta); border-radius: 0 4px 4px 0;
+}
+.barras__relleno--reglas { background: var(--reglas); }
+.barras__relleno--fuera { background: var(--sello); }
+.barras__meta { font-size: 0.875rem; color: var(--texto-2); }
+/* La muestra de color va junto al texto; el texto nunca lleva el color de la serie. */
+.etiqueta-motor { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; color: var(--texto); }
+.etiqueta-motor::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: var(--tinta); }
+.etiqueta-motor--reglas::before { background: var(--reglas); }
+
+.motor-resumen {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 0.75rem 1.5rem;
+  margin: 1.25rem 0 0; padding-top: 1rem; border-top: 1px solid var(--renglon);
+}
+.motor-resumen dt { font-size: 0.875rem; font-weight: 600; color: var(--texto-2); }
+.motor-resumen dd { margin: 0; color: var(--texto-2); font-size: 0.875rem; }
+.motor-resumen .cifra { font-size: 1.375rem; font-weight: 700; color: var(--texto); margin-right: 0.2rem; }
+
+/* Columnas por mes: crecen desde una sola línea base; la cifra va sobre la columna */
+.grafica-meses { container: meses / inline-size; }
+.columnas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(var(--columnas), minmax(0, 1fr)); gap: 2px;
+}
+.columnas__item { display: grid; grid-template-rows: 9rem auto; outline-offset: 2px; border-radius: var(--radio); }
+.columnas__zona {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  border-bottom: 1px solid var(--renglon-fuerte); padding-top: 1.5rem;
+}
+.columnas__barra {
+  position: relative; width: min(100%, 24px); height: calc(var(--alto) * 100%); min-height: 2px;
+  background: var(--tinta); border-radius: 4px 4px 0 0;
+}
+.columnas__cifra {
+  position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding-bottom: 0.15rem;
+  font-size: 0.8125rem; font-weight: 700; color: var(--texto); white-space: nowrap; visibility: hidden;
+}
+.columnas__item--rotulado .columnas__cifra,
+.columnas__item:hover .columnas__cifra,
+.columnas__item:focus-visible .columnas__cifra { visibility: visible; }
+.columnas__item:hover .columnas__barra { background: var(--tinta-hover); }
+.columnas__mes {
+  display: grid; justify-items: center; padding-top: 0.3rem;
+  font-size: 0.8125rem; line-height: 1.25; color: var(--texto-2); white-space: nowrap;
+}
+.columnas__anio { font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.columnas__anio--repetido { visibility: hidden; }
+
+/* Tarjeta angosta: cada mes es una fila con su barra horizontal y todas las cifras a la vista */
+@container meses (max-width: 21rem) {
+  .columnas { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
+  .columnas__item { grid-template-rows: none; grid-template-columns: 5.5rem minmax(0, 1fr); align-items: center; column-gap: 0.5rem; }
+  .columnas__zona { order: 2; justify-content: flex-start; align-items: center; height: 1.5rem; padding: 0; border-bottom: 0; border-left: 1px solid var(--renglon-fuerte); }
+  .columnas__barra { width: calc(var(--alto) * (100% - 3rem)); height: 10px; min-width: 2px; border-radius: 0 4px 4px 0; }
+  .columnas__cifra { visibility: visible; bottom: auto; top: 50%; left: 100%; transform: translateY(-50%); padding: 0 0 0 0.4rem; }
+  .columnas__mes { order: 1; display: flex; gap: 0.3rem; justify-content: flex-start; padding: 0; font-size: 0.875rem; }
+  .columnas__anio--repetido { visibility: visible; }
+}
+
+/* Fallos recientes */
+.fallos { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--renglon); }
+.fallos li { display: grid; gap: 0.15rem; padding: 0.7rem 0; border-bottom: 1px solid var(--renglon); }
+.fallos time { font-size: 0.875rem; font-weight: 600; color: var(--texto-2); }
+.fallos__causa {
+  font-family: var(--cifras); font-size: 0.8125rem; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+
+/* Tabla de usuarios */
+.tabla-usuarios__marco { overflow-x: auto; }
+.tabla-usuarios { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.tabla-usuarios th, .tabla-usuarios td { padding: 0.65rem 0.75rem 0.65rem 0; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--renglon); }
+.tabla-usuarios thead th { font-size: 0.8125rem; font-weight: 700; color: var(--texto-2); white-space: nowrap; border-bottom: 1.5px solid var(--renglon-fuerte); }
+.tabla-usuarios tbody tr:last-child > * { border-bottom: 0; }
+.tabla-usuarios__nombre { font-weight: 700; }
+.tabla-usuarios__email { color: var(--texto-2); overflow-wrap: anywhere; }
+.tabla-usuarios .tabla-usuarios__num { text-align: right; padding-right: 1.5rem; font-weight: 700; }
+.tabla-usuarios__fecha { white-space: nowrap; }
+.rol {
+  display: inline-block; padding: 0.2rem 0.45rem 0.15rem; border-radius: 3px; line-height: 1;
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--texto-2); border: 1.5px dashed var(--renglon-fuerte);
+}
+.rol--admin { color: var(--tinta); border: 1.5px solid var(--tinta); }
+
+/* En el celular cada cuenta se apila: nombre y rol, correo, y las dos cifras con su etiqueta */
+@media (max-width: 640px) {
+  .tabla-usuarios, .tabla-usuarios tbody { display: block; }
+  .tabla-usuarios thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .tabla-usuarios tr {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.75rem;
+    padding: 0.75rem 0; border-bottom: 1px solid var(--renglon);
+  }
+  .tabla-usuarios tbody tr:last-child { border-bottom: 0; }
+  .tabla-usuarios th, .tabla-usuarios td, .tabla-usuarios .tabla-usuarios__num { display: block; padding: 0; border: 0; text-align: left; }
+  .tabla-usuarios__nombre { order: 1; flex: 1 1 0; min-width: 0; }
+  .tabla-usuarios__rol { order: 2; }
+  .tabla-usuarios__email { order: 3; flex-basis: 100%; }
+  .tabla-usuarios .tabla-usuarios__num { order: 4; font-weight: 400; }
+  .tabla-usuarios__fecha { order: 5; margin-left: auto; }
+  .tabla-usuarios [data-etiqueta]::before { content: attr(data-etiqueta) ': '; color: var(--texto-2); font-family: var(--fuente); }
+
+  /* Dos fichas por fila; si queda una sola al final, ocupa todo el ancho */
+  .fichas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ficha:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* Con la tercera pestaña (Panel) la navegación del celular pone el ícono sobre el texto */
+@media (max-width: 480px) {
+  .navegacion--tres button { flex-direction: column; justify-content: flex-start; gap: 0.1rem; padding: 0.35rem 0.25rem; font-size: 0.875rem; line-height: 1.2; text-align: center; }
+}
+
 /* --- Móvil ---------------------------------------------------------------- */
 
 @media (max-width: 640px) {
